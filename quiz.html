@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AS Level Macroeconomics — Knowledge Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+  --bg:#04060f;--bg2:#080c1c;--bg3:#0d1228;
+  --sur:rgba(255,255,255,.032);--sur2:rgba(255,255,255,.06);
+  --bdr:rgba(255,255,255,.07);--bdr2:rgba(56,220,255,.22);
+  --ink:#e8f0ff;--ink2:#7a8faf;--muted:#38485e;
+  --cyan:#38dcff;--volt:#b8ff47;--vio:#a78bfa;
+  --gold:#ffc145;--coral:#ff5f6d;
+  --correct:#39d98a;--wrong:#ff5f6d;
+  /* ── aliases so old code still works ── */
+  --border:rgba(255,255,255,.07);
+  --accent2:#38dcff;
+  --accent3:#b8ff47;
+  --correct-bg:rgba(57,217,138,.08);
+  --wrong-bg:rgba(255,95,109,.08);
+  --tag-policy:rgba(56,220,255,.07);
+  --tag-policy-border:rgba(56,220,255,.2);
+  --tag-supply:rgba(184,255,71,.07);
+  --tag-supply-border:rgba(184,255,71,.2);
+  --tag-behav:rgba(167,139,250,.07);
+  --tag-behav-border:rgba(167,139,250,.2);
+}
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink2);
+    font-family: 'Sora', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+
+  
+  /* SIDEBAR - glassmorphism toggleable */
+  .sidebar{
+    position:fixed;top:0;left:0;width:230px;height:100vh;
+    background:rgba(8,12,28,0.85);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border-right:1px solid rgba(56,220,255,0.1);
+    overflow-y:auto;z-index:200;scrollbar-width:thin;
+    scrollbar-color:var(--bdr) transparent;
+    transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    transform:translateX(0);
+  }
+  .sidebar.collapsed{transform:translateX(-230px)}
+  .sidebar::-webkit-scrollbar{width:3px}
+  .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.07)}
+  .sb-brand{display:flex;align-items:center;gap:10px;padding:18px 20px;
+    border-bottom:1px solid rgba(56,220,255,0.1);text-decoration:none}
+  .sb-orb{width:7px;height:7px;border-radius:50%;background:var(--cyan);
+    box-shadow:0 0 10px var(--cyan);flex-shrink:0}
+  .sb-name{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.1em;color:var(--ink)}
+  .sb-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.05em;margin-top:1px}
+  .sb-sec{padding:18px 20px 5px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .mn{font-family:'DM Mono',monospace;font-size:9px;color:var(--cyan);opacity:.55;margin-right:7px;letter-spacing:.05em}
+  .sidebar a{display:block;padding:7px 20px;color:var(--muted);text-decoration:none;font-size:12.5px;
+    transition:all .15s;border-left:2px solid transparent;line-height:1.4}
+  .sidebar a:hover{color:var(--ink);background:rgba(56,220,255,.04);border-left-color:rgba(56,220,255,.28)}
+  .sidebar a.on{color:var(--cyan);border-left-color:var(--cyan);background:rgba(56,220,255,.06)}
+  
+  /* Toggle button */
+  .sb-toggle{
+    position:fixed;top:50%;left:230px;transform:translateY(-50%);
+    width:20px;height:52px;
+    background:rgba(8,12,28,0.9);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(56,220,255,0.15);
+    border-left:none;
+    border-radius:0 8px 8px 0;
+    cursor:pointer;z-index:201;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cyan);font-size:10px;
+    transition:left 0.3s cubic-bezier(0.4,0,0.2,1), background 0.15s, width 0.15s;
+  }
+  .sb-toggle.collapsed{left:0}
+  .sb-toggle:hover{background:rgba(56,220,255,0.1);width:24px}
+  
+  .main{margin-left:230px;padding:48px 60px 80px;max-width:1100px;transition:margin-left 0.3s cubic-bezier(0.4,0,0.2,1)}
+  .main.expanded{margin-left:0}
+
+
+
+  /* HERO */
+  .hero {
+    margin-bottom: 52px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Sora', sans-serif; font-weight:700;
+    font-size: 42px;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 560px;
+  }
+
+  /* TOPIC SELECTOR */
+  .selector-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+
+  .topic-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    color: var(--ink2);
+    font-family: 'Sora', sans-serif;
+  }
+  .topic-btn:hover {
+    border-color: var(--cyan);
+    background: var(--bg2);
+    transform: translateY(-1px);
+  }
+  .topic-btn.selected {
+    border-color: var(--cyan);
+    background: rgba(121,192,255,0.06);
+  }
+  .topic-btn .t-num {
+    font-family: 'DM Mono', 'SFMono-Regular', monospace;
+    font-size: 10px;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .topic-btn .t-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  .topic-btn .t-count {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cyan);
+    color: #020408;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 36px;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    box-shadow: 0 0 32px rgba(56,220,255,0.3);
+  }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(56,220,255,0.5); }
+  .start-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* QUIZ AREA */
+  .quiz-area { display: none; }
+  .quiz-area.active { display: block; }
+  .selector-area.hidden { display: none; }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .quiz-header-left h2 {
+    font-family: 'Sora', sans-serif; font-weight:700;
+    font-size: 28px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .quiz-header-left p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .progress-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    min-width: 160px;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+  .progress-bar {
+    width: 160px;
+    height: 4px;
+    background: var(--bg2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--cyan);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.25s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .q-type-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+  .q-type-badge.mc   { background: var(--tag-policy); border-color: var(--tag-policy-border); color: var(--cyan); }
+  .q-type-badge.tf   { background: var(--tag-supply); border-color: var(--tag-supply-border); color: var(--accent3); }
+  .q-type-badge.short{ background: var(--tag-behav);  border-color: var(--tag-behav-border);  color: #bc8cff; }
+
+  .q-text {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  /* MC OPTIONS */
+  .options-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 18px;
+    cursor: pointer;
+    text-align: left;
+    color: var(--ink2);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    transition: all 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--cyan);
+    background: rgba(121,192,255,0.05);
+  }
+  .option-btn .opt-letter {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 16px;
+  }
+  .option-btn.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+    color: var(--correct);
+  }
+  .option-btn.correct .opt-letter { color: var(--correct); }
+  .option-btn.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+    color: var(--wrong);
+  }
+  .option-btn.wrong .opt-letter { color: var(--wrong); }
+  .option-btn:disabled { cursor: default; }
+
+  /* TRUE/FALSE */
+  .tf-options { display: flex; gap: 12px; }
+  .tf-btn {
+    flex: 1;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.12s;
+    color: var(--ink2);
+  }
+  .tf-btn:hover:not(:disabled) {
+    border-color: var(--cyan);
+    background: rgba(121,192,255,0.05);
+  }
+  .tf-btn.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+    color: var(--correct);
+  }
+  .tf-btn.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+    color: var(--wrong);
+  }
+  .tf-btn:disabled { cursor: default; }
+
+  /* SHORT ANSWER */
+  .short-answer-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .short-input {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 16px;
+    color: var(--ink);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.12s;
+    width: 100%;
+  }
+  .short-input:focus {
+    outline: none;
+    border-color: var(--cyan);
+  }
+  .short-input:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+  .check-btn {
+    align-self: flex-start;
+    background: var(--bg2);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    border-radius: 6px;
+    padding: 9px 20px;
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .check-btn:hover { background: rgba(56,220,255,.08); }
+
+  /* FEEDBACK */
+  .feedback-box {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.55;
+    display: none;
+  }
+  .feedback-box.show { display: block; animation: fadeUp 0.2s ease; }
+  .feedback-box.correct-fb {
+    background: var(--correct-bg);
+    border: 1px solid rgba(86,211,100,0.25);
+    color: var(--correct);
+  }
+  .feedback-box.wrong-fb {
+    background: var(--wrong-bg);
+    border: 1px solid rgba(248,81,73,0.25);
+    color: var(--ink2);
+  }
+  .feedback-box .fb-label {
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .feedback-box.correct-fb .fb-label { color: var(--correct); }
+  .feedback-box.wrong-fb .fb-label { color: var(--wrong); }
+  .model-answer {
+    color: var(--ink2);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  /* NAV BUTTONS */
+  .q-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+  }
+  .nav-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--ink2);
+    border-radius: 6px;
+    padding: 10px 22px;
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .nav-btn:hover { border-color: var(--cyan); color: var(--ink); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; border-color: var(--border); }
+  .nav-btn.primary {
+    background: var(--cyan);
+    border-color: var(--cyan);
+    color: #020408;
+    font-weight: 700;
+    box-shadow: 0 0 16px rgba(56,220,255,0.25);
+  }
+  .nav-btn.primary:hover { box-shadow: 0 0 28px rgba(56,220,255,0.45); transform: translateY(-1px); }
+
+  /* RESULTS */
+  .results-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 48px;
+    text-align: center;
+    animation: fadeUp 0.3s ease;
+  }
+  .score-ring {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 28px;
+    position: relative;
+  }
+  .score-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .score-ring circle {
+    fill: none;
+    stroke-width: 6;
+  }
+  .ring-bg { stroke: var(--bg3); }
+  .ring-fill { stroke: var(--accent2); stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+  .ring-fill.high { stroke: var(--correct); }
+  .ring-fill.mid  { stroke: #e3b341; }
+  .ring-fill.low  { stroke: var(--wrong); }
+  .score-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--ink);
+  }
+  .results-title {
+    font-family: 'Sora', sans-serif; font-weight:700;
+    font-size: 30px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .results-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 36px;
+  }
+
+  .results-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+    text-align: left;
+  }
+  .rb-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .rb-item .rb-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 24px;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .rb-item .rb-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .results-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .results-actions .nav-btn { padding: 11px 26px; font-size: 14px; }
+
+  /* REVIEW SECTION */
+  .review-list { margin-top: 40px; }
+  .review-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .review-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--border);
+  }
+  .review-item.r-correct { border-left-color: var(--correct); }
+  .review-item.r-wrong   { border-left-color: var(--wrong); }
+  .review-item .r-q {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .review-item .r-your {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .review-item .r-correct-ans {
+    font-size: 13px;
+    color: var(--correct);
+  }
+  .review-item .r-status {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .r-correct .r-status { background: var(--correct-bg); color: var(--correct); }
+  .r-wrong   .r-status { background: var(--wrong-bg);   color: var(--wrong); }
+
+  .r-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .self-mark-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 5px;
+    padding: 5px 14px;
+    font-family: 'Sora', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .self-mark-btn:hover {
+    border-color: var(--correct);
+    color: var(--correct);
+    background: var(--correct-bg);
+  }
+  .self-mark-btn.self-mark-correct {
+    background: var(--correct-bg);
+    border-color: var(--correct);
+    color: var(--correct);
+    font-weight: 600;
+  }
+  .self-mark-btn.self-mark-correct:hover {
+    border-color: var(--wrong);
+    color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  /* BACK LINK */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 32px;
+    transition: color 0.12s;
+  }
+  .back-link:hover { color: var(--cyan); }
+</style>
+</head>
+<body>
+
+<nav class="sidebar" id="sidebar">
+  <a href="home.html" class="sb-brand"><div class="sb-orb"></div><div><div class="sb-name">AS MACRO</div><div class="sb-sub">Economics</div></div></a>
+  <div class="sb-sec">Navigation</div>
+  <a href="home.html">Home</a>
+  <a href="index.html">Study Notes</a>
+  <a href="quiz.html" class="on">Knowledge Test</a>
+  <a href="exampaper.html">Exam Papers</a>
+</nav>
+<button class="sb-toggle" id="sbToggle" onclick="toggleSidebar()" title="Toggle sidebar">&#8249;</button>
+
+
+
+<!-- MAIN -->
+<main class="main" id="mainContent">
+
+  <!-- SELECTOR VIEW -->
+  <div class="selector-area" id="selectorArea">
+    <a href="index.html" class="back-link">← Back to Study Notes</a>
+    <div class="hero">
+      <div class="hero-label">Knowledge Test</div>
+      <h1>Test Your<br><em>Understanding</em></h1>
+      <p>Select one or more topics below then start the quiz. You'll get a mix of multiple choice, true/false, and short answer questions — with full feedback at the end.</p>
+    </div>
+
+    <div class="selector-label">Choose Topics</div>
+    <div class="topic-grid" id="topicGrid"></div>
+
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-top:8px;">
+      <button class="start-btn" id="startBtn" disabled onclick="startQuiz()">
+        Start Quiz &rarr;
+      </button>
+      <button class="start-btn" style="background:transparent;color:var(--ink2);border:1px solid var(--bdr);box-shadow:none;" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'" onmouseout="this.style.borderColor='var(--bdr)';this.style.color='var(--ink2)'" onclick="selectAll()">Select All</button>
+    </div>
+  </div>
+
+  <!-- QUIZ VIEW -->
+  <div class="quiz-area" id="quizArea">
+    <div class="quiz-header">
+      <div class="quiz-header-left">
+        <h2 id="quizTitle">Topic Quiz</h2>
+        <p id="quizSubtitle"></p>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label" id="progressLabel">1 / 10</div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-top:4px;" id="quizTimer">00:00</div>
+      </div>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="q-nav">
+      <button class="nav-btn" id="prevBtn" onclick="prevQ()" disabled>← Previous</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS VIEW -->
+  <div id="resultsArea" style="display:none;">
+    <div class="results-card" id="resultsCard"></div>
+    <div class="review-list" id="reviewList"></div>
+  </div>
+
+</main>
+
+<script>
+// ─── QUESTION BANK ────────────────────────────────────────────────────────────
+// Format: { type: 'mc'|'tf'|'short', q, options (mc), answer, explanation }
+const QUESTIONS = {
+
+  m1: {
+    title: "M1 — Policy Objectives",
+    questions: [
+      { type:'mc', q:"Which of the following is NOT a standard macroeconomic policy objective?", options:["Low and stable inflation","Full employment","Maximising corporate profit","Sustainable economic growth"], answer:2, explanation:"The four standard objectives are: low inflation, full employment, economic growth, and balance of payments equilibrium. Maximising corporate profit is a microeconomic/firm-level goal." },
+      { type:'tf', q:"The UK government's inflation target is currently set at 2%, as measured by CPI.", answer:true, explanation:"The Bank of England has a 2% CPI inflation target set by the government. Missing the target by more than 1% either way requires a letter to the Chancellor." },
+      { type:'mc', q:"A conflict between policy objectives occurs when:", options:["Unemployment and inflation both fall","Reducing inflation leads to higher unemployment","GDP growth and employment rise together","Tax revenues increase with growth"], answer:1, explanation:"The Phillips Curve illustrates the trade-off: policies that reduce inflation (e.g. raising interest rates) tend to slow the economy and increase unemployment." },
+      { type:'short', q:"Explain what is meant by the 'trade-off' between inflation and unemployment.", answer:"There is an inverse relationship between inflation and unemployment (the Phillips Curve). Expansionary policies that reduce unemployment tend to increase inflationary pressure, while contractionary policies that reduce inflation tend to raise unemployment. Policymakers must balance these competing objectives." },
+      { type:'tf', q:"Economic growth is measured by changes in Nominal GDP only.", answer:false, explanation:"Economic growth is more accurately measured using Real GDP (adjusted for inflation) to reflect genuine increases in output rather than price-level changes." },
+      { type:'mc', q:"Which institution sets the UK's inflation target?", options:["The Bank of England","The Office for Budget Responsibility","HM Treasury / the Chancellor","The International Monetary Fund"], answer:2, explanation:"The inflation target (2% CPI) is set by the government (HM Treasury / Chancellor). The Bank of England's MPC is then responsible for hitting that target using monetary policy tools." },
+      { type:'tf', q:"A current account surplus is always a sign of a healthy economy.", answer:false, explanation:"A surplus can reflect weak domestic demand or suppressed consumption. It may also cause diplomatic tensions with trading partners. Surpluses are not automatically desirable." },
+      { type:'mc', q:"Which of the following best describes 'full employment'?", options:["Zero unemployment","Only frictional and structural unemployment remain","Only cyclical unemployment remains","100% labour force participation"], answer:1, explanation:"Full employment does not mean zero unemployment. It means the economy is at its natural rate — only unavoidable types (frictional, structural) remain, and cyclical unemployment is zero." },
+      { type:'short', q:"Explain one policy conflict that might arise when trying to achieve both low inflation and low unemployment simultaneously.", answer:"Using expansionary fiscal or monetary policy to reduce unemployment (e.g. cutting interest rates or increasing government spending) increases AD, which can cause demand-pull inflation. Conversely, contractionary policies to reduce inflation raise unemployment. This trade-off is illustrated by the short-run Phillips Curve — it is difficult to achieve both objectives simultaneously without supply-side improvements." },
+    ]
+  },
+
+  m2: {
+    title: "M2 — Circular Flow of Income",
+    questions: [
+      { type:'mc', q:"Which of the following is an injection into the circular flow of income?", options:["Savings","Taxation","Imports","Investment"], answer:3, explanation:"Injections add money to the circular flow: Investment (I), Government Spending (G), and Exports (X). Savings, taxation, and imports are withdrawals (leakages)." },
+      { type:'tf', q:"Imports represent an injection into the circular flow of income.", answer:false, explanation:"Imports are a withdrawal (leakage) from the circular flow because money leaves the domestic economy to pay for foreign goods and services." },
+      { type:'mc', q:"If injections exceed withdrawals in the circular flow, the economy will:", options:["Contract","Stay in equilibrium","Expand","Experience deflation"], answer:2, explanation:"When injections (I+G+X) > withdrawals (S+T+M), there is a net addition of money into the economy, which causes national income and output to expand." },
+      { type:'short', q:"Identify and briefly explain the three withdrawals from the circular flow of income.", answer:"The three withdrawals are: (1) Savings — income not spent by households, removed from the flow; (2) Taxation — income taken by government reduces disposable income; (3) Imports — spending on foreign goods sends money out of the domestic economy." },
+      { type:'mc', q:"In the circular flow model, which of the following is an injection?", options:["Savings","Taxation","Government spending","Imports"], answer:2, explanation:"Government spending (G) is an injection — it adds money into the circular flow. Savings, taxation, and imports are all withdrawals (leakages)." },
+      { type:'tf', q:"If withdrawals equal injections, the level of national income will be in equilibrium.", answer:true, explanation:"When S+T+M = I+G+X, there is no net addition or withdrawal from the circular flow, so national income remains stable — this is the equilibrium condition." },
+      { type:'mc', q:"Which of the following would cause national income to fall?", options:["An increase in exports","A fall in savings","An increase in government spending","A rise in imports"], answer:3, explanation:"A rise in imports is a withdrawal — more money leaves the domestic circular flow to pay for foreign goods, reducing national income." },
+      { type:'short', q:"Explain how an increase in exports affects the circular flow of income.", answer:"Exports are an injection into the circular flow — they bring money into the domestic economy from abroad. An increase in exports raises injections above withdrawals, causing national income to expand. Via the multiplier, the initial injection leads to a larger final increase in national income as income is re-spent within the economy." },
+    ]
+  },
+
+  m3: {
+    title: "M3 — Aggregate Demand",
+    questions: [
+      { type:'mc', q:"The formula for Aggregate Demand is:", options:["C + I + G + (X−M)","C + I + T + G","C + S + I + G","Y + C + I + G"], answer:0, explanation:"AD = C (Consumption) + I (Investment) + G (Government Spending) + (X−M) (Net Exports). This is the standard national income identity." },
+      { type:'tf', q:"A rise in interest rates will typically increase Consumption (C) in the AD formula.", answer:false, explanation:"Higher interest rates increase the cost of borrowing and incentivise saving over spending, so Consumption typically falls, reducing AD." },
+      { type:'mc', q:"Which factor would most likely increase Aggregate Demand?", options:["A rise in income tax","An increase in interest rates","A fall in consumer confidence","A rise in government spending"], answer:3, explanation:"An increase in government spending (G) directly raises one of the four components of AD, shifting the AD curve rightward." },
+      { type:'mc', q:"If consumer confidence falls, we would expect:", options:["Consumption to rise","Investment to fall","AD to shift right","The AD curve to shift left"], answer:3, explanation:"Falling consumer confidence reduces willingness to spend, lowering Consumption (C), which shifts the AD curve to the left." },
+      { type:'short', q:"State two determinants of Investment (I) within the AD formula.", answer:"Investment is determined by: (1) Interest rates — lower rates reduce borrowing costs, encouraging more capital investment. (2) Business confidence / expectations of future demand — firms invest more when they expect future profits to be high. Other valid answers: accelerator effect, technological change, government incentives." },
+      { type:'tf', q:"Net exports (X−M) contribute positively to AD when a country imports more than it exports.", answer:false, explanation:"When imports exceed exports, (X−M) is negative, which reduces AD. A trade deficit subtracts from aggregate demand." },
+      { type:'mc', q:"Which component of AD is typically the largest in a developed economy like the UK?", options:["Government spending (G)","Investment (I)","Consumption (C)","Net exports (X−M)"], answer:2, explanation:"In most developed economies, household Consumption (C) is the largest component of AD, typically accounting for around 60–65% of GDP in the UK." },
+      { type:'short', q:"Explain how a fall in interest rates might affect two components of AD.", answer:"(1) Consumption rises — lower mortgage costs increase disposable income; borrowing becomes cheaper, encouraging consumer spending on credit. (2) Investment rises — lower borrowing costs reduce the cost of capital for firms, making more investment projects profitable (lower hurdle rate). Both effects shift AD rightward." },
+    ]
+  },
+
+  m4: {
+    title: "M4 — The Aggregate Demand Curve",
+    questions: [
+      { type:'mc', q:"Why does the Aggregate Demand curve slope downward?", options:["Because firms produce less at higher prices","Because higher prices reduce real wealth, exports become less competitive, and real incomes fall","Because supply increases as prices fall","Because taxes automatically rise with the price level"], answer:1, explanation:"The AD curve slopes down due to: (1) the wealth effect (higher prices erode real wealth), (2) the international competitiveness effect (higher prices reduce exports), and (3) the real balance effect (higher prices reduce purchasing power)." },
+      { type:'tf', q:"A movement along the AD curve is caused by a change in the general price level.", answer:true, explanation:"A change in the price level causes a movement along the AD curve (extension or contraction). A change in any other determinant shifts the entire curve." },
+      { type:'short', q:"Distinguish between a movement along the AD curve and a shift of the AD curve.", answer:"A movement along the AD curve is caused by a change in the general price level — as prices change, the quantity of real output demanded changes. A shift of the AD curve is caused by a change in any non-price determinant of AD (e.g. government spending, interest rates, consumer confidence), moving the entire curve left or right." },
+      { type:'mc', q:"Which of the following would shift the AD curve to the right?", options:["A rise in income tax","A fall in consumer confidence","A cut in interest rates","A rise in the exchange rate"], answer:2, explanation:"A cut in interest rates reduces the cost of borrowing, boosting both Consumption and Investment, shifting AD rightward." },
+      { type:'tf', q:"A rise in the price level shifts the AD curve to the left.", answer:false, explanation:"A rise in the price level causes a movement along the AD curve (a contraction in quantity demanded), not a shift of the curve itself." },
+      { type:'short', q:"Explain why the AD curve slopes downward using the wealth effect.", answer:"The wealth effect: when the price level rises, the real value of people's wealth and savings falls. People feel less wealthy and reduce their spending, so the quantity of real output demanded falls. This gives the AD curve its negative slope — higher price levels are associated with lower real output demanded." },
+    ]
+  },
+
+  m5: {
+    title: "M5 — Aggregate Supply",
+    questions: [
+      { type:'mc', q:"The Short-Run Aggregate Supply (SRAS) curve is upward sloping because:", options:["Firms face lower costs as prices rise","Higher prices make production more profitable, encouraging firms to produce more","Consumers demand more at higher prices","All factors of production are variable in the short run"], answer:1, explanation:"In the short run, some factor costs are fixed. When prices rise, firms' revenues increase but fixed costs don't, making production more profitable and incentivising increased output." },
+      { type:'tf', q:"In the classical (long-run) model, the LRAS curve is vertical.", answer:true, explanation:"The LRAS is vertical at the economy's potential output (full employment level), reflecting the classical view that in the long run, all prices and wages are flexible and the economy returns to full employment." },
+      { type:'mc', q:"Which of the following would shift SRAS to the left?", options:["A fall in oil prices","Improved production technology","An increase in labour productivity","A rise in raw material costs"], answer:3, explanation:"A rise in raw material costs increases firms' production costs, reducing profitability at each price level, which shifts SRAS leftward (cost-push effect)." },
+      { type:'mc', q:"What would cause a rightward shift of the LRAS curve?", options:["Increased government spending","A rise in AD","Improvements in education and skills of the workforce","A fall in interest rates"], answer:2, explanation:"LRAS shifts right when the productive capacity of the economy increases. Improvements in human capital (education/skills) increase the long-run potential output of the economy." },
+      { type:'short', q:"Explain the difference between SRAS and LRAS.", answer:"SRAS (Short-Run Aggregate Supply) shows the relationship between the price level and output when at least one factor of production is fixed — it slopes upward. LRAS (Long-Run Aggregate Supply) represents the economy's potential output at full employment, where all factors are variable — it is vertical. SRAS shifts with changes in input costs; LRAS shifts with changes in productive capacity." },
+      { type:'mc', q:"A fall in oil prices would most likely cause:", options:["SRAS to shift left","LRAS to shift left","SRAS to shift right","AD to shift left"], answer:2, explanation:"Lower oil prices reduce production costs for firms, improving profitability at every price level and shifting SRAS to the right — a favourable supply-side shock." },
+      { type:'tf', q:"An improvement in technology shifts both SRAS and LRAS to the right.", answer:true, explanation:"Technological progress reduces production costs (shifting SRAS right) and increases the economy's productive capacity (shifting LRAS right), enabling higher non-inflationary output." },
+      { type:'short', q:"Explain what is meant by a supply-side shock and give one example.", answer:"A supply-side shock is an unexpected event that shifts the aggregate supply curve. A negative supply shock (e.g. a sudden rise in oil prices) shifts SRAS left, raising prices and reducing output — stagflation. A positive supply shock (e.g. a technological breakthrough) shifts SRAS right, reducing prices and raising output." },
+    ]
+  },
+
+  m6: {
+    title: "M6 — Macroeconomic Equilibrium",
+    questions: [
+      { type:'mc', q:"Macroeconomic equilibrium occurs where:", options:["AD equals SRAS only","AD equals LRAS only","AD equals both SRAS and LRAS","The government budget is balanced"], answer:0, explanation:"Short-run macroeconomic equilibrium occurs at the intersection of AD and SRAS. Full equilibrium (long-run) occurs at the intersection of AD, SRAS, and LRAS." },
+      { type:'tf', q:"A positive output gap means the economy is producing above its full-employment potential.", answer:true, explanation:"A positive output gap occurs when actual GDP exceeds potential GDP. This typically leads to inflationary pressure as the economy is 'overheating'." },
+      { type:'mc', q:"A negative output gap suggests:", options:["Inflationary pressure in the economy","Unemployment above the natural rate","The economy is at full capacity","Government surplus"], answer:1, explanation:"A negative output gap means actual output is below potential. This implies spare capacity in the economy and unemployment above the natural rate." },
+      { type:'short', q:"What is the difference between a positive and negative output gap? Give one consequence of each.", answer:"A positive output gap occurs when actual GDP > potential GDP, meaning the economy is overheating. Consequence: demand-pull inflation. A negative output gap occurs when actual GDP < potential GDP, meaning resources are underutilised. Consequence: higher unemployment / below-trend growth." },
+      { type:'mc', q:"In the Keynesian model, the LRAS curve is:", options:["Vertical at full employment","Horizontal at low output levels then vertical","Upward sloping throughout","Downward sloping"], answer:1, explanation:"In the Keynesian model, LRAS is horizontal (or nearly so) when there is spare capacity — firms can increase output without raising prices — then becomes vertical at full employment." },
+      { type:'tf', q:"A rightward shift of AD when the economy is at full employment will increase real output.", answer:false, explanation:"If the economy is already at full employment (on the vertical LRAS), a rightward shift of AD cannot increase real output. Instead, it only raises the price level — causing demand-pull inflation." },
+      { type:'short', q:"Explain how an economy self-corrects from a negative output gap in the classical model.", answer:"In the classical model, a negative output gap leads to downward pressure on wages and prices as unemployment rises. Lower wages reduce firms' costs, shifting SRAS rightward. This continues until the economy returns to full employment at a lower price level — no government intervention is needed. This is the classical self-correction mechanism." },
+    ]
+  },
+
+  m7: {
+    title: "M7 — Inflation (Measurement)",
+    questions: [
+      { type:'mc', q:"The Consumer Price Index (CPI) measures inflation by:", options:["Tracking the price of a basket of goods purchased by a typical UK household","Measuring changes in house prices only","Calculating the GDP deflator","Tracking wholesale commodity prices"], answer:0, explanation:"CPI measures the average change in prices of a representative 'basket' of goods and services purchased by typical households, updated periodically to reflect spending patterns." },
+      { type:'tf', q:"The Retail Price Index (RPI) includes mortgage interest payments, whereas CPI does not.", answer:true, explanation:"This is a key difference between RPI and CPI. RPI includes housing costs such as mortgage interest payments, which is why RPI is typically higher than CPI and is used for some index-linked contracts." },
+      { type:'mc', q:"If the CPI rises from 105 to 110, the rate of inflation is approximately:", options:["5%","4.76%","10%","0.5%"], answer:1, explanation:"Inflation rate = (110−105)/105 × 100 = 4.76%. Note it's calculated from the base (105), not the new value." },
+      { type:'short', q:"State two limitations of using CPI as a measure of inflation.", answer:"(1) The basket of goods may not reflect spending patterns of all households — e.g. it may not accurately represent pensioners or low-income groups who spend differently. (2) CPI excludes housing costs (mortgage payments), which is a major expense for many households, potentially understating true cost of living. (3) Quality changes in goods are difficult to account for. (4) The basket is only updated periodically, causing a lag." },
+      { type:'mc', q:"Deflation refers to:", options:["A fall in the rate of inflation","A sustained fall in the general price level","A negative output gap","A fall in consumer spending"], answer:1, explanation:"Deflation is a sustained fall in the general price level (negative inflation rate). It is different from disinflation, which is a fall in the rate of inflation while prices are still rising." },
+      { type:'tf', q:"Disinflation means prices are falling.", answer:false, explanation:"Disinflation means the rate of inflation is falling — prices are still rising, but more slowly. Deflation (falling prices) is a separate phenomenon." },
+      { type:'mc', q:"Which of the following is included in RPI but not CPI?", options:["Food prices","Energy bills","Mortgage interest payments","Clothing costs"], answer:2, explanation:"Mortgage interest payments are included in RPI but excluded from CPI. This is one reason RPI typically gives a higher inflation reading and why some index-linked contracts use RPI." },
+      { type:'short', q:"Explain what is meant by the 'base effect' in measuring inflation.", answer:"The base effect refers to how the starting point (base period) affects the calculated inflation rate. If prices were unusually high in the previous year (base period), the annual inflation rate will appear lower even if prices haven't changed much. Conversely, a low base leads to a higher measured inflation rate. This can distort year-on-year comparisons and make interpreting CPI data misleading." },
+    ]
+  },
+
+  m8: {
+    title: "M8 — Inflation (Causes & Consequences)",
+    questions: [
+      { type:'mc', q:"Demand-pull inflation is caused by:", options:["Rising costs of production","Excess demand in the economy relative to supply","A fall in the money supply","Declining consumer confidence"], answer:1, explanation:"Demand-pull inflation occurs when aggregate demand exceeds aggregate supply — 'too much money chasing too few goods'. It is associated with a positive output gap." },
+      { type:'tf', q:"Cost-push inflation is caused by an increase in Aggregate Demand.", answer:false, explanation:"Cost-push inflation is caused by increases in production costs (e.g. rising oil prices, wages), which shift SRAS leftward, raising prices and reducing output simultaneously." },
+      { type:'mc', q:"Which of the following is a consequence of unexpectedly high inflation?", options:["Redistribution from debtors to creditors","Increased international competitiveness","Menu costs and shoe leather costs","Increased real value of savings"], answer:2, explanation:"High inflation creates 'menu costs' (cost of changing prices) and 'shoe leather costs' (time/effort spent managing cash to avoid inflation eroding value). It also redistributes from creditors to debtors." },
+      { type:'mc', q:"Hyperinflation is most damaging because it:", options:["Slightly reduces purchasing power","Destroys confidence in money as a medium of exchange","Increases real wages","Reduces the current account deficit"], answer:1, explanation:"Hyperinflation (extremely rapid price increases) destroys trust in the currency. Money can no longer reliably serve as a store of value or medium of exchange, causing economic breakdown." },
+      { type:'short', q:"Explain how inflation can redistribute wealth from creditors to debtors.", answer:"Inflation erodes the real value of money. If a debtor owes £10,000 and inflation is high, the real value of that debt falls over time — the debtor repays in money that is worth less than when they borrowed. This benefits debtors at the expense of creditors, who receive repayments with lower purchasing power than expected." },
+      { type:'mc', q:"Which of the following is a consequence of high and volatile inflation?", options:["Increased business investment","Greater international competitiveness","Reduced economic uncertainty encouraging long-term planning","Reduced international competitiveness as export prices rise"], answer:3, explanation:"High inflation raises domestic prices relative to foreign competitors, making exports less competitive and imports more attractive, worsening the current account and reducing export revenues." },
+      { type:'tf', q:"Wage-price spirals are an example of demand-pull inflation.", answer:false, explanation:"Wage-price spirals are a form of cost-push inflation. Workers demand higher wages to compensate for rising prices; higher wages increase firms' costs, which they pass on as higher prices, leading to further wage demands." },
+      { type:'short', q:"Distinguish between demand-pull and cost-push inflation.", answer:"Demand-pull inflation occurs when AD rises faster than AS — 'too much money chasing too few goods'. It is associated with a positive output gap and rightward AD shifts. Cost-push inflation occurs when production costs rise (e.g. higher oil prices, wages), shifting SRAS left — output falls while prices rise (stagflation). The two types have different policy responses: demand management is appropriate for demand-pull; supply-side policy is needed for cost-push." },
+    ]
+  },
+
+  m9: {
+    title: "M9 — Unemployment (Measurement)",
+    questions: [
+      { type:'mc', q:"The claimant count measure of unemployment records:", options:["All people without a job","People claiming Jobseeker's Allowance or Universal Credit","People in part-time work who want full-time work","People who have given up looking for work"], answer:1, explanation:"The claimant count counts those claiming unemployment-related benefits. It is a narrower measure than the Labour Force Survey (LFS) and can be affected by changes in benefit eligibility rules." },
+      { type:'tf', q:"The Labour Force Survey (LFS) tends to give a higher estimate of unemployment than the claimant count.", answer:true, explanation:"The LFS uses the ILO definition (unemployed, available to start work, actively seeking work) and usually captures more unemployed people than the claimant count, which depends on benefit eligibility." },
+      { type:'mc', q:"Which group is NOT counted as unemployed under the ILO definition?", options:["Someone without a job who is actively seeking work","Someone who worked one hour last week","Someone not working due to long-term illness","Someone made redundant two weeks ago"], answer:1, explanation:"Under the ILO definition, anyone who worked even one hour in the reference week is counted as employed — not unemployed. This is often cited as a limitation of the measure." },
+      { type:'short', q:"State two reasons why official unemployment figures may underestimate the true level of unemployment.", answer:"(1) Discouraged workers — people who have given up looking for work are not counted as unemployed. (2) Underemployment — part-time workers who want full-time work are counted as employed. (3) Some workers may be in jobs below their skill level. (4) The ILO counts anyone working one hour as employed." },
+      { type:'mc', q:"The ILO definition of unemployment requires that a person must be:", options:["Claiming benefits","Without any work, available to start, and actively seeking work","Not working for more than one month","Registered with the government as unemployed"], answer:1, explanation:"The ILO (International Labour Organisation) definition: a person must be (1) without a job, (2) available to start work within two weeks, and (3) actively seeking work in the past four weeks." },
+      { type:'tf', q:"Underemployment is captured by the claimant count measure.", answer:false, explanation:"The claimant count only records those claiming unemployment benefits. Underemployment (working fewer hours than desired) is not captured by the claimant count — it appears as employment in both measures." },
+      { type:'short', q:"Explain why unemployment statistics should be interpreted with caution.", answer:"Official statistics have several limitations: (1) they exclude discouraged workers who have stopped looking; (2) the claimant count depends on benefit eligibility rules, which change over time; (3) the LFS uses a sample survey with potential sampling error; (4) underemployment is not fully captured; (5) regional variations are hidden by national averages. These factors mean the true extent of labour market slack may be greater than official figures suggest." },
+    ]
+  },
+
+  m10: {
+    title: "M10 — Unemployment (Causes & Consequences)",
+    questions: [
+      { type:'mc', q:"Cyclical (demand-deficient) unemployment occurs when:", options:["Workers lack the skills required by employers","Workers are between jobs","There is insufficient aggregate demand in the economy","Structural changes make certain industries obsolete"], answer:2, explanation:"Cyclical unemployment is caused by a deficiency in aggregate demand — during recessions, firms reduce output and lay off workers. It is the most severe type as it affects the whole economy." },
+      { type:'tf', q:"Frictional unemployment is caused by a lack of aggregate demand.", answer:false, explanation:"Frictional unemployment is caused by the time it takes workers to find new jobs after leaving or losing one — it is a natural and temporary form of unemployment unrelated to AD." },
+      { type:'mc', q:"Structural unemployment is best addressed by:", options:["Cutting interest rates","Increasing government spending","Retraining and reskilling programmes","Reducing income taxes"], answer:2, explanation:"Structural unemployment arises from a mismatch between workers' skills and available jobs. Supply-side policies like retraining address the root cause by improving labour market flexibility and human capital." },
+      { type:'mc', q:"Which type of unemployment rises during a recession?", options:["Frictional","Seasonal","Cyclical","Classical"], answer:2, explanation:"Cyclical unemployment rises when the economy contracts and aggregate demand falls, reducing demand for labour across the economy." },
+      { type:'short', q:"Explain two economic consequences of long-term unemployment.", answer:"(1) Loss of human capital — long-term unemployed workers may see their skills depreciate, making them harder to re-employ and reducing the economy's productive capacity. (2) Increased government expenditure — more spending on welfare benefits and reduced tax revenues create pressure on public finances. (3) Hysteresis — prolonged unemployment can permanently reduce the productive capacity of the economy." },
+      { type:'mc', q:"Seasonal unemployment occurs because:", options:["Workers lack skills needed by employers","Demand for labour varies predictably throughout the year","The economy is in recession","Technology replaces workers permanently"], answer:1, explanation:"Seasonal unemployment reflects predictable fluctuations in labour demand — e.g. tourism workers in winter, agricultural workers outside harvest season. It is temporary and recurring." },
+      { type:'tf', q:"The natural rate of unemployment can be reduced by supply-side policies.", answer:true, explanation:"The natural rate (NAIRU) includes frictional and structural unemployment. Supply-side policies — such as retraining, better job matching, and improving incentives to work — can reduce the natural rate by tackling its structural causes." },
+      { type:'short', q:"Explain the concept of hysteresis in the context of unemployment.", answer:"Hysteresis describes how a temporary increase in unemployment can become permanent. During a recession, unemployed workers' skills depreciate, they lose work habits, and employers become reluctant to hire them. This raises the natural rate of unemployment even after the recession ends — the economy settles at a higher long-run unemployment rate. It suggests that cyclical unemployment can have lasting structural effects." },
+    ]
+  },
+
+  m11: {
+    title: "M11 — Economic Growth",
+    questions: [
+      { type:'mc', q:"Economic growth is best defined as:", options:["A rise in the general price level","An increase in real GDP over time","A fall in unemployment","An increase in government spending"], answer:1, explanation:"Economic growth is measured as an increase in real GDP (adjusted for inflation) over time, reflecting genuine increases in an economy's productive output." },
+      { type:'tf', q:"GDP per capita is a better measure of living standards than total GDP.", answer:true, explanation:"GDP per capita divides total output by population, giving a per-person measure. It better reflects individual living standards than total GDP, which may be high due to a large population rather than high productivity." },
+      { type:'mc', q:"Which of the following is a potential cost of rapid economic growth?", options:["Rising living standards","Increased tax revenues","Environmental degradation","Lower unemployment"], answer:2, explanation:"Rapid growth can lead to environmental costs such as increased pollution, resource depletion, and climate impacts — negative externalities of increased production and consumption." },
+      { type:'short', q:"Distinguish between actual and potential economic growth.", answer:"Actual growth is the increase in an economy's real GDP — how much is currently being produced. Potential growth is an increase in the economy's productive capacity (the maximum output it could produce at full employment). Actual growth can occur by using spare capacity; potential growth requires an outward shift of the LRAS curve." },
+      { type:'mc', q:"Which of the following is a social cost of rapid economic growth?", options:["Higher tax revenues","Increased living standards","Greater income inequality","More employment opportunities"], answer:2, explanation:"Rapid growth often increases income inequality as returns to capital rise faster than wages, or as growth is concentrated in certain regions or industries, leaving others behind." },
+      { type:'tf', q:"GDP per capita accounts for differences in population size between countries.", answer:true, explanation:"GDP per capita = Total GDP ÷ Population. It controls for country size, making it a better basis for comparing living standards across countries than total GDP." },
+      { type:'mc', q:"Which of the following best measures sustainable economic growth?", options:["Nominal GDP growth","Real GDP growth per capita","Growth in consumer spending","Growth in government borrowing"], answer:1, explanation:"Sustainable growth is best measured by real GDP per capita growth — it accounts for inflation (real), distributes output across the population (per capita), and reflects genuine improvements in productive output." },
+      { type:'short', q:"Explain two limitations of using GDP as a measure of living standards.", answer:"(1) GDP ignores income distribution — a high GDP could coexist with severe inequality, masking low living standards for a large portion of the population. (2) GDP does not account for negative externalities — pollution and environmental degradation reduce welfare but are not subtracted from GDP. (3) GDP ignores non-market activities such as unpaid care work or volunteering. (4) GDP does not capture leisure time or work-life balance." },
+    ]
+  },
+
+  m12: {
+    title: "M12 — Economic Growth (Causes & Consequences)",
+    questions: [
+      { type:'mc', q:"An increase in total factor productivity causes:", options:["A leftward shift of SRAS","A rightward shift of LRAS","A movement along the SRAS curve","No change in the production possibility frontier"], answer:1, explanation:"Total factor productivity improvements mean the economy can produce more output from the same inputs, shifting the LRAS rightward and expanding the production possibility frontier." },
+      { type:'tf', q:"Economic growth always improves the distribution of income.", answer:false, explanation:"Growth can worsen income inequality — benefits may accrue primarily to capital owners rather than workers, or growth may be regionally concentrated. The relationship between growth and equality is complex." },
+      { type:'mc', q:"Which factor is most important for sustainable long-run economic growth?", options:["Short-term stimulus spending","Technological progress and innovation","Low interest rates","High consumer confidence"], answer:1, explanation:"Long-run growth ultimately depends on improvements in productivity and technology (Solow growth model). Capital accumulation and human capital also matter, but technological progress is the only source of sustained per-capita growth in most models." },
+      { type:'short', q:"Explain two causes of economic growth.", answer:"(1) Increase in investment — more capital goods increases the productive capacity of the economy, shifting LRAS right. (2) Technological progress — innovation allows more output per unit of input, raising productivity and potential GDP. Other valid causes: improvements in human capital (education/training), discovery of natural resources, population growth." },
+      { type:'mc', q:"The accelerator theory suggests that investment is determined by:", options:["The level of interest rates","Changes in national income (GDP growth)","Government spending decisions","The exchange rate"], answer:1, explanation:"The accelerator theory states that net investment depends on the rate of change of national income. When GDP grows rapidly, firms invest more in capital to meet rising demand." },
+      { type:'tf', q:"Economic growth always reduces poverty.", answer:false, explanation:"Growth does not automatically reduce poverty. If the gains from growth are concentrated among the wealthy (trickle-down economics often fails), poverty can persist or worsen despite rising GDP. Redistribution policies are also needed." },
+      { type:'short', q:"Explain the difference between short-run and long-run economic growth using AD/AS analysis.", answer:"Short-run growth occurs when AD increases and the economy moves along the SRAS curve — output rises along with the price level. This uses up spare capacity. Long-run growth occurs when the LRAS shifts rightward — the productive capacity of the economy increases, allowing higher non-inflationary output. LRAS shifts are caused by improvements in factor quantity or quality (capital, labour, technology)." },
+    ]
+  },
+
+  m13: {
+    title: "M13 — The Multiplier",
+    questions: [
+      { type:'mc', q:"If the Marginal Propensity to Consume (MPC) is 0.8, the multiplier is:", options:["0.8","5","1.25","4"], answer:1, explanation:"Multiplier = 1 / (1 − MPC) = 1 / (1 − 0.8) = 1 / 0.2 = 5. An initial injection of spending is multiplied through the economy as each recipient spends a proportion of their income." },
+      { type:'tf', q:"A higher Marginal Propensity to Save (MPS) leads to a larger multiplier effect.", answer:false, explanation:"The multiplier = 1/MPS. A higher MPS means a higher leakage rate, so each round of spending creates less additional spending — the multiplier is smaller, not larger." },
+      { type:'mc', q:"The multiplier effect is likely to be larger when:", options:["Taxes are high","The MPC is high and there are few leakages","Interest rates are rising","The economy is at full capacity"], answer:1, explanation:"A high MPC means more of each income increase is re-spent, creating more rounds of spending. Fewer leakages (low taxes, imports, savings) mean more money stays circulating domestically." },
+      { type:'mc', q:"If the multiplier is 4 and the government increases spending by £500m, the total change in national income is:", options:["£500m","£125m","£2,000m","£4,500m"], answer:2, explanation:"Change in national income = Multiplier × Initial injection = 4 × £500m = £2,000m." },
+      { type:'short', q:"Explain how the multiplier process works using an example.", answer:"The multiplier describes how an initial injection of spending creates a larger final increase in national income. For example, if the government spends £100m building a road, construction workers receive £100m in income. If MPC = 0.8, they spend £80m, creating income for others who spend £64m, and so on. The total increase in income = £100m × multiplier (1/MPS = 5) = £500m." },
+      { type:'mc', q:"Which of the following would reduce the size of the multiplier?", options:["A higher MPC","Lower income tax rates","Fewer imports","A higher marginal rate of taxation"], answer:3, explanation:"A higher marginal tax rate is a leakage — more of each round of income is taken in tax rather than re-spent. This increases the withdrawal rate and reduces the multiplier." },
+      { type:'tf', q:"The multiplier effect only applies to government spending.", answer:false, explanation:"The multiplier applies to any injection into the circular flow — investment (I), government spending (G), or exports (X). An increase in any of these will have a multiplied effect on national income." },
+      { type:'mc', q:"If MPS = 0.25, what is the multiplier?", options:["2.5","4","0.25","25"], answer:1, explanation:"Multiplier = 1/MPS = 1/0.25 = 4. Equivalently, MPC = 1 − 0.25 = 0.75, so multiplier = 1/(1−0.75) = 4." },
+      { type:'short', q:"Explain two reasons why the actual multiplier effect may be smaller than predicted.", answer:"(1) Leakages — in an open economy, some spending flows out through imports, taxation, and savings, reducing the number of rounds of re-spending. (2) Crowding out — government borrowing may raise interest rates, discouraging private investment and partially offsetting the fiscal injection. (3) If the economy is near full capacity, supply-side constraints prevent real output increasing — the multiplier effect becomes inflationary rather than expansionary." },
+    ]
+  },
+
+  m15: {
+    title: "M15 — Fiscal Policy",
+    questions: [
+      { type:'mc', q:"Expansionary fiscal policy involves:", options:["Raising taxes and cutting spending","Cutting taxes and/or increasing government spending","Raising interest rates","Reducing the money supply"], answer:1, explanation:"Expansionary fiscal policy aims to stimulate AD by increasing injections (government spending) or reducing leakages (taxes), shifting the AD curve rightward." },
+      { type:'tf', q:"Automatic stabilisers reduce the need for discretionary fiscal policy.", answer:true, explanation:"Automatic stabilisers (e.g. unemployment benefits, progressive taxation) automatically cushion economic fluctuations without government action, reducing the amplitude of the business cycle." },
+      { type:'mc', q:"A structural budget deficit occurs when:", options:["The government spends more than it receives only during a recession","There is a deficit even when the economy is at full employment","Tax revenues exceed government spending","The current account is in deficit"], answer:1, explanation:"A structural deficit is a 'permanent' deficit that exists at any point in the economic cycle, including at full employment. It contrasts with a cyclical deficit which arises only during downturns." },
+      { type:'mc', q:"Crowding out refers to:", options:["Unemployment rising during a recession","Government borrowing raising interest rates and reducing private investment","The multiplier reducing the impact of fiscal policy","Imports rising as income rises"], answer:1, explanation:"Crowding out occurs when increased government borrowing drives up interest rates, making borrowing more expensive for private firms and households, potentially reducing private investment and partially offsetting fiscal stimulus." },
+      { type:'short', q:"Explain one advantage and one disadvantage of expansionary fiscal policy.", answer:"Advantage: It can directly stimulate AD during a recession, reducing unemployment and supporting growth. Government spending on infrastructure also improves supply-side capacity. Disadvantage: It increases the budget deficit and public debt, which may require future tax rises or spending cuts. It can also lead to crowding out of private investment if interest rates rise." },
+      { type:'mc', q:"Which of the following is an example of an automatic stabiliser?", options:["A one-off infrastructure spending package","A cut in VAT announced in the budget","Unemployment benefits rising automatically in a recession","The government issuing new bonds"], answer:2, explanation:"Automatic stabilisers work without discretionary action. Unemployment benefits rise automatically as more people lose jobs in a downturn, supporting aggregate demand without a policy decision." },
+      { type:'tf', q:"A budget surplus means the government is spending more than it receives in tax.", answer:false, explanation:"A budget surplus means tax revenues exceed government spending. The government is taking more out of the economy than it puts in — this is contractionary. A deficit is when spending exceeds revenues." },
+      { type:'mc', q:"Fiscal drag occurs when:", options:["Higher taxes reduce private investment","Rising incomes push taxpayers into higher tax brackets without a policy change","The government reduces spending during a recession","Automatic stabilisers reduce the multiplier"], answer:1, explanation:"Fiscal drag occurs when inflation or real wage growth pushes taxpayers into higher tax brackets — increasing the tax burden without any deliberate government policy. It has a contractionary effect on disposable income." },
+      { type:'short', q:"Explain the difference between a cyclical and structural budget deficit.", answer:"A cyclical deficit arises because of the economic cycle — during a recession, tax revenues fall and welfare spending rises automatically. It disappears when the economy recovers. A structural deficit exists even at full employment — it reflects a fundamental imbalance between government spending and revenues that is independent of the cycle. Structural deficits require deliberate policy changes (spending cuts or tax rises) to eliminate." },
+    ]
+  },
+
+  m16: {
+    title: "M16 — Monetary Policy",
+    questions: [
+      { type:'mc', q:"In the UK, monetary policy is set by:", options:["HM Treasury","The Chancellor of the Exchequer","The Monetary Policy Committee (MPC) of the Bank of England","The Office for Budget Responsibility"], answer:2, explanation:"The Bank of England's Monetary Policy Committee (MPC) sets interest rates independently of the government, targeting 2% CPI inflation." },
+      { type:'tf', q:"Quantitative Easing (QE) involves the Bank of England printing money to give directly to consumers.", answer:false, explanation:"QE involves the central bank creating money electronically to purchase financial assets (mainly government bonds) from banks, increasing bank reserves and stimulating lending. It does not involve direct transfers to consumers." },
+      { type:'mc', q:"If the Bank of England raises interest rates, we would expect:", options:["AD to increase","The exchange rate to depreciate","Consumption and investment to fall","Inflation to rise in the short term"], answer:2, explanation:"Higher interest rates increase borrowing costs and incentivise saving over spending, reducing Consumption (C) and Investment (I), two components of AD." },
+      { type:'short', q:"Explain the transmission mechanism by which a cut in interest rates affects inflation.", answer:"A cut in interest rates: (1) reduces mortgage and loan costs → increases disposable income → higher Consumption; (2) reduces borrowing costs for firms → more Investment; (3) may cause currency depreciation → exports cheaper, imports dearer → higher net exports. All three effects shift AD rightward, increasing real output and (with a lag) demand-pull inflationary pressure." },
+      { type:'mc', q:"Which of the following is a limitation of monetary policy?", options:["It is set independently of political pressure","It can be adjusted frequently","It may be ineffective when interest rates are near zero (liquidity trap)","It directly controls government spending"], answer:2, explanation:"When interest rates are near zero, cutting them further has little effect — the economy may be in a liquidity trap where further cuts cannot stimulate borrowing or spending. This was a key problem after the 2008 financial crisis." },
+      { type:'tf', q:"An increase in interest rates will tend to cause the pound to appreciate.", answer:true, explanation:"Higher UK interest rates attract 'hot money' flows from abroad seeking better returns. This increases demand for sterling, causing it to appreciate against other currencies." },
+      { type:'mc', q:"The main objective of the Bank of England's Monetary Policy Committee is:", options:["To maximise employment","To hit the government's 2% CPI inflation target","To balance the government budget","To control the money supply directly"], answer:1, explanation:"The MPC's primary mandate is to maintain price stability by keeping CPI inflation at 2%. It must also support the government's objectives for growth and employment, subject to achieving the inflation target." },
+      { type:'short', q:"Explain what is meant by 'quantitative easing' and why it was used after 2008.", answer:"Quantitative easing (QE) involves the central bank creating new money electronically and using it to purchase assets (mainly government bonds) from financial institutions. This raises asset prices, lowers long-term interest rates, and encourages banks to lend more. After 2008, conventional interest rate cuts were insufficient (rates were near zero), so the Bank of England used QE to inject additional stimulus into the economy and prevent deflation." },
+    ]
+  },
+
+  m17: {
+    title: "M17 — Supply-Side Policy",
+    questions: [
+      { type:'mc', q:"The aim of supply-side policies is to:", options:["Increase aggregate demand","Shift the LRAS curve to the right by improving productive efficiency","Reduce the budget deficit","Lower interest rates"], answer:1, explanation:"Supply-side policies aim to increase the economy's productive capacity — shifting LRAS rightward — thereby enabling non-inflationary growth." },
+      { type:'tf', q:"Reducing income tax is an example of a market-based supply-side policy.", answer:true, explanation:"Market-based supply-side policies work through price mechanisms. Reducing income tax increases the incentive to work (improving labour supply), while cutting corporation tax incentivises investment." },
+      { type:'mc', q:"Interventionist supply-side policies include:", options:["Privatisation and deregulation","Trade union reform","Government investment in education and infrastructure","Cutting corporation tax"], answer:2, explanation:"Interventionist supply-side policies involve direct government action to improve human capital, infrastructure, and R&D. Examples include investment in education, training schemes, and public infrastructure." },
+      { type:'mc', q:"A key advantage of supply-side policies over demand-side policies is:", options:["They work faster","They can increase output without causing inflation","They directly reduce unemployment in the short run","They always reduce the budget deficit"], answer:1, explanation:"Supply-side policies shift LRAS outward, allowing the economy to grow without the inflationary pressure associated with AD stimulus. This makes them more sustainable for long-run growth." },
+      { type:'short', q:"Explain two supply-side policies that could reduce structural unemployment.", answer:"(1) Government investment in education and retraining — equips workers with skills demanded by growing sectors, reducing the skills mismatch that causes structural unemployment. (2) Reforming benefits to improve work incentives — reducing the replacement ratio encourages unemployed workers to seek employment. Other valid policies: subsidies for firms that train workers, reducing barriers to starting businesses, deregulation." },
+      { type:'mc', q:"Which of the following is a key disadvantage of supply-side policies?", options:["They cause inflation","They are quick to implement","They often take many years to have an effect","They increase the money supply"], answer:2, explanation:"Supply-side policies (e.g. education reform, infrastructure) typically take years or even decades to improve productive capacity. This makes them unsuitable for short-run stabilisation — they are a long-run strategy." },
+      { type:'tf', q:"Privatisation is an example of an interventionist supply-side policy.", answer:false, explanation:"Privatisation is a market-based supply-side policy — it reduces state involvement and relies on market competition to improve efficiency. Interventionist policies involve direct government action (e.g. spending on education, infrastructure)." },
+      { type:'mc', q:"Deregulation as a supply-side policy aims to:", options:["Increase government control over markets","Reduce barriers to competition and lower costs for businesses","Increase wages across the economy","Reduce the money supply"], answer:1, explanation:"Deregulation removes rules and restrictions that increase costs and limit competition. It aims to improve efficiency and encourage business activity, shifting LRAS rightward." },
+      { type:'short', q:"Evaluate whether market-based or interventionist supply-side policies are more effective.", answer:"Market-based policies (tax cuts, deregulation, privatisation) work through price incentives and tend to be less costly for government. However, they may worsen inequality and do not always produce the desired behaviour. Interventionist policies (education spending, infrastructure) directly build productive capacity and address market failures, but take longer to produce results and require significant public expenditure. The most effective approach likely combines both — market incentives alongside targeted investment in human capital and infrastructure." },
+    ]
+  },
+
+  m19: {
+    title: "M19 — Balance of Payments",
+    questions: [
+      { type:'mc', q:"The current account of the balance of payments records:", options:["Foreign direct investment flows","Trade in goods and services, income, and current transfers","Changes in official foreign exchange reserves","Long-term capital movements"], answer:1, explanation:"The current account records: (1) trade in goods, (2) trade in services, (3) income flows (wages, investment income), and (4) current transfers (e.g. foreign aid, remittances)." },
+      { type:'tf', q:"A current account deficit means a country is exporting more than it imports.", answer:false, explanation:"A current account deficit means a country is importing more than it exports (and/or has net outflows of income/transfers). The deficit must be financed by capital inflows." },
+      { type:'mc', q:"Which of the following would improve a current account deficit?", options:["A rise in domestic income","A rise in consumer confidence","A depreciation of the exchange rate","An increase in imports"], answer:2, explanation:"A depreciation makes exports cheaper for foreigners and imports more expensive domestically (subject to the Marshall-Lerner condition), improving the trade balance and the current account." },
+      { type:'short', q:"Explain why a current account deficit may not always require policy intervention.", answer:"A deficit may be sustainable if: (1) it is being financed by productive capital inflows (FDI) that will generate future export capacity; (2) it reflects strong domestic demand and growth; (3) it is small relative to GDP; (4) the country has a strong track record and can borrow at low rates. Intervention is more urgent when the deficit is large, persistent, and financed by short-term 'hot money' flows." },
+      { type:'mc', q:"Which component of the current account records trade in financial services?", options:["Trade in goods","Trade in services","Income","Current transfers"], answer:1, explanation:"Trade in services (also called the 'invisibles') includes financial services, tourism, insurance, and education. The UK typically runs a surplus on services due to the strength of its financial sector." },
+      { type:'tf', q:"Foreign direct investment (FDI) is recorded on the current account.", answer:false, explanation:"FDI is recorded on the financial account (capital account). The current account records trade in goods and services, investment income flows, and current transfers — not the capital movements themselves." },
+      { type:'mc', q:"A country running a large current account deficit must:", options:["Have a budget deficit","Be running a capital account surplus to finance it","Be in recession","Have a depreciating currency"], answer:1, explanation:"The balance of payments must balance overall. A current account deficit must be financed by a corresponding surplus on the financial/capital account — i.e. net inflows of investment capital from abroad." },
+      { type:'short', q:"Explain two policies a government could use to reduce a current account deficit.", answer:"(1) Exchange rate depreciation — makes exports cheaper and imports more expensive, improving the trade balance (subject to Marshall-Lerner condition). (2) Expenditure-reducing policies — contractionary fiscal/monetary policy reduces domestic demand and therefore imports, improving the current account but at the cost of lower growth. (3) Supply-side policies — improving productivity and competitiveness makes exports more attractive in the long run." },
+    ]
+  },
+
+  m20: {
+    title: "M20 — Imbalances in the Balance of Payments",
+    questions: [
+      { type:'mc', q:"A persistent current account deficit can be caused by:", options:["Strong export performance","Low domestic demand","Uncompetitive domestic industries and strong consumer demand for imports","A depreciation of the exchange rate"], answer:2, explanation:"Persistent deficits are often caused by structural uncompetitiveness (high costs, low productivity) and strong import demand. The UK's deficit partly reflects a decline in manufacturing and strong consumer spending." },
+      { type:'tf', q:"A current account surplus is always beneficial for an economy.", answer:false, explanation:"A surplus can indicate suppressed domestic consumption and over-reliance on exports. Trading partners may also view large surpluses (e.g. China, Germany) as a source of global imbalance and pressure for revaluation." },
+      { type:'mc', q:"The J-curve effect suggests that after a depreciation:", options:["The current account immediately improves","The current account initially worsens before improving","The current account remains unchanged","Imports fall immediately"], answer:1, explanation:"The J-curve reflects the fact that trade volumes take time to adjust. In the short run, existing contracts mean volumes are price-inelastic, so a depreciation worsens the current account (higher import costs) before improving it as trade responds." },
+      { type:'short', q:"Explain the Marshall-Lerner condition and its relevance to exchange rate policy.", answer:"The Marshall-Lerner condition states that a depreciation will improve the current account only if the sum of the price elasticities of demand for exports and imports exceeds 1 (PEDx + PEDm > 1). If demand is inelastic in the short run (PEDs < 1), depreciation worsens the current account. This is why the J-curve occurs — over time, as elasticities increase, the balance improves. It means exchange rate depreciation is only an effective policy tool in the long run." },
+      { type:'mc', q:"Which of the following would cause a persistent current account surplus?", options:["High domestic consumer demand for imports","An overvalued exchange rate","Strong export competitiveness and suppressed domestic consumption","Rapid economic growth"], answer:2, explanation:"Persistent surpluses (e.g. Germany, China) are typically caused by highly competitive export sectors combined with relatively weak domestic demand for imports." },
+      { type:'tf', q:"The J-curve effect means a depreciation always worsens the current account permanently.", answer:false, explanation:"The J-curve is temporary. In the short run, a depreciation worsens the current account as import costs rise before volumes adjust. In the long run (if Marshall-Lerner holds), the current account improves as trade volumes respond to the new prices." },
+      { type:'short', q:"Explain why large global imbalances (e.g. between China and the US) may be problematic for the world economy.", answer:"Large imbalances create instability: surplus countries accumulate foreign assets and may face currency appreciation pressure, while deficit countries accumulate debts that eventually must be repaid. If deficit countries suddenly adjust (e.g. sharp depreciation or recession), global demand can collapse. The 2008 crisis was partly attributed to global imbalances — US deficits were financed by Chinese surpluses, creating unsustainable capital flows and financial fragility." },
+    ]
+  },
+
+  m21: {
+    title: "M21 — Exchange Rates",
+    questions: [
+      { type:'mc', q:"If the pound sterling appreciates against the euro, UK exports to the Eurozone will:", options:["Become cheaper for Eurozone buyers","Become more expensive for Eurozone buyers","Remain unchanged in price","Automatically fall in quantity immediately"], answer:1, explanation:"An appreciation means foreigners must pay more of their currency to buy pounds. This makes pound-denominated UK exports more expensive for Eurozone buyers, reducing demand." },
+      { type:'tf', q:"Under a floating exchange rate system, the central bank sets the exchange rate.", answer:false, explanation:"Under a floating exchange rate, the rate is determined by supply and demand in the foreign exchange market. Under a fixed or managed system, the central bank intervenes to maintain a target rate." },
+      { type:'mc', q:"Hot money flows into a country when:", options:["Its interest rates are relatively low","Its interest rates are relatively high","Its exchange rate is expected to depreciate","Its current account is in deficit"], answer:1, explanation:"Hot money is short-term speculative capital attracted by higher returns. Higher interest rates attract financial flows, increasing demand for the currency and causing an appreciation." },
+      { type:'mc', q:"Purchasing Power Parity (PPP) theory suggests that in the long run:", options:["All countries should have the same GDP","Exchange rates adjust to equalise the price of identical goods across countries","Interest rates converge internationally","Inflation is always identical across countries"], answer:1, explanation:"PPP theory holds that exchange rates should adjust so that identical goods cost the same in different countries when expressed in a common currency (e.g. the Big Mac Index)." },
+      { type:'short', q:"Explain two advantages of a fixed exchange rate system.", answer:"(1) Certainty for trade and investment — businesses know what exchange rate to expect, reducing currency risk and encouraging cross-border trade and long-term investment. (2) Discipline on inflation — countries must maintain similar inflation rates to their peg partner; any loss of competitiveness is immediately visible, enforcing policy discipline. Disadvantage trade-off: the country loses monetary policy independence." },
+      { type:'mc', q:"A depreciation of the pound will most likely:", options:["Reduce the price of UK exports abroad","Increase the price of UK exports abroad","Make UK imports cheaper","Reduce demand-pull inflationary pressure"], answer:0, explanation:"A depreciation means foreign buyers need fewer units of their own currency to buy pounds, so pound-denominated UK exports become cheaper for foreign buyers, increasing export competitiveness." },
+      { type:'tf', q:"Speculation can cause exchange rate instability under a floating rate system.", answer:true, explanation:"In a floating exchange rate system, speculative 'hot money' flows can cause sharp and sudden exchange rate movements that are unrelated to economic fundamentals, creating instability for trade and investment." },
+      { type:'mc', q:"Which of the following is an advantage of a floating exchange rate?", options:["Greater certainty for international trade","The central bank retains full monetary policy independence","It eliminates currency speculation","It always reflects purchasing power parity"], answer:1, explanation:"Under a floating rate, the central bank does not need to defend a fixed rate using interest rates or reserves. This frees monetary policy to focus on domestic objectives like inflation and unemployment." },
+      { type:'short', q:"Explain how an appreciation of the pound might affect UK inflation.", answer:"An appreciation makes imports cheaper — reducing the cost of imported raw materials (lowering cost-push inflationary pressure) and reducing the price of imported consumer goods. It also makes UK exports more expensive, potentially reducing export demand and AD. Both effects tend to reduce inflationary pressure. However, if the appreciation reduces AD significantly, it could also negatively affect output and employment." },
+    ]
+  }
+};
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let selectedTopics = [];
+let activeQuestions = [];
+let currentQ = 0;
+let userAnswers = []; // { answered: bool, correct: bool, userAns, qRef }
+
+// ─── BUILD TOPIC GRID ─────────────────────────────────────────────────────────
+function buildTopicGrid() {
+  const grid = document.getElementById('topicGrid');
+  Object.entries(QUESTIONS).forEach(([key, topic]) => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-btn';
+    btn.dataset.key = key;
+    btn.innerHTML = `
+      <span class="t-num">${key.toUpperCase()}</span>
+      <div class="t-name">${topic.title.replace(/^M\d+ — /, '')}</div>
+      <div class="t-count">${topic.questions.length} questions</div>
+    `;
+    btn.addEventListener('click', () => toggleTopic(key, btn));
+    grid.appendChild(btn);
+  });
+}
+
+function toggleTopic(key, btn) {
+  const idx = selectedTopics.indexOf(key);
+  if (idx === -1) { selectedTopics.push(key); btn.classList.add('selected'); }
+  else { selectedTopics.splice(idx, 1); btn.classList.remove('selected'); }
+  document.getElementById('startBtn').disabled = selectedTopics.length === 0;
+}
+
+function selectAll() {
+  const allKeys = Object.keys(QUESTIONS);
+  const allSelected = selectedTopics.length === allKeys.length;
+  document.querySelectorAll('.topic-btn').forEach(btn => {
+    const key = btn.dataset.key;
+    if (allSelected) { btn.classList.remove('selected'); }
+    else { btn.classList.add('selected'); }
+  });
+  selectedTopics = allSelected ? [] : [...allKeys];
+  document.getElementById('startBtn').disabled = selectedTopics.length === 0;
+}
+
+// ─── START QUIZ ───────────────────────────────────────────────────────────────
+function startQuiz() {
+  activeQuestions = [];
+  selectedTopics.forEach(key => {
+    QUESTIONS[key].questions.forEach(q => activeQuestions.push({ ...q, _topic: key }));
+  });
+  // Shuffle
+  for (let i = activeQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [activeQuestions[i], activeQuestions[j]] = [activeQuestions[j], activeQuestions[i]];
+  }
+  userAnswers = activeQuestions.map(() => ({ answered: false, correct: null, userAns: null }));
+  currentQ = 0;
+
+  document.getElementById('selectorArea').classList.add('hidden');
+  document.getElementById('quizArea').classList.add('active');
+
+  const titles = selectedTopics.length === 1
+    ? QUESTIONS[selectedTopics[0]].title
+    : `${selectedTopics.length} Topics`;
+  document.getElementById('quizTitle').textContent = titles;
+  document.getElementById('quizSubtitle').textContent = `${activeQuestions.length} questions — Mix of multiple choice, true/false & short answer`;
+
+  renderQuestion();
+  startTimer();
+}
+
+// ─── RENDER QUESTION ──────────────────────────────────────────────────────────
+function renderQuestion() {
+  const q = activeQuestions[currentQ];
+  const ua = userAnswers[currentQ];
+  const total = activeQuestions.length;
+
+  document.getElementById('progressLabel').textContent = `${currentQ + 1} / ${total}`;
+  document.getElementById('progressFill').style.width = `${((currentQ + 1) / total) * 100}%`;
+
+  document.getElementById('prevBtn').disabled = currentQ === 0;
+
+  const isLast = currentQ === total - 1;
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.textContent = isLast ? 'Finish →' : 'Next →';
+
+  let html = `
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-num">Q${currentQ + 1}</span>
+        <span class="q-type-badge ${q.type}">${q.type === 'mc' ? 'Multiple Choice' : q.type === 'tf' ? 'True / False' : 'Short Answer'}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+  `;
+
+  if (q.type === 'mc') {
+    const letters = ['A','B','C','D'];
+    html += `<ul class="options-list">`;
+    q.options.forEach((opt, i) => {
+      let cls = '';
+      if (ua.answered) {
+        if (i === q.answer) cls = 'correct';
+        else if (i === ua.userAns) cls = 'wrong';
+      }
+      html += `<li><button class="option-btn ${cls}" ${ua.answered ? 'disabled' : ''} onclick="answerMC(${i})">
+        <span class="opt-letter">${letters[i]}</span>${opt}
+      </button></li>`;
+    });
+    html += `</ul>`;
+
+  } else if (q.type === 'tf') {
+    const trueClass  = ua.answered ? (q.answer === true  ? 'correct' : ua.userAns === true  ? 'wrong' : '') : '';
+    const falseClass = ua.answered ? (q.answer === false ? 'correct' : ua.userAns === false ? 'wrong' : '') : '';
+    html += `<div class="tf-options">
+      <button class="tf-btn ${trueClass}" ${ua.answered ? 'disabled' : ''} onclick="answerTF(true)">True</button>
+      <button class="tf-btn ${falseClass}" ${ua.answered ? 'disabled' : ''} onclick="answerTF(false)">False</button>
+    </div>`;
+
+  } else {
+    html += `<div class="short-answer-wrap">
+      <textarea class="short-input" id="shortInput" placeholder="Type your answer here…" ${ua.answered ? 'disabled' : ''}>${ua.userAns || ''}</textarea>
+      ${!ua.answered ? `<button class="check-btn" onclick="answerShort()">Check Answer</button>` : ''}
+    </div>`;
+  }
+
+  // Feedback
+  if (ua.answered) {
+    if (q.type === 'short') {
+      html += `<div class="feedback-box show wrong-fb">
+        <div class="fb-label">Model Answer</div>
+        <div class="model-answer">${q.answer}</div>
+      </div>`;
+    } else {
+      const correct = ua.correct;
+      html += `<div class="feedback-box show ${correct ? 'correct-fb' : 'wrong-fb'}">
+        <div class="fb-label">${correct ? '✓ Correct' : '✗ Incorrect'}</div>
+        <div class="model-answer">${q.explanation}</div>
+      </div>`;
+    }
+  }
+
+  html += `</div>`;
+  document.getElementById('questionContainer').innerHTML = html;
+}
+
+// ─── TIMER ───────────────────────────────────────────────────────────────────
+let timerInterval = null;
+let timerSeconds = 0;
+
+function startTimer() {
+  timerSeconds = 0;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    const el = document.getElementById('quizTimer');
+    if (el) el.textContent = formatTime(timerSeconds);
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+
+
+function answerMC(i) {
+  const q = activeQuestions[currentQ];
+  userAnswers[currentQ] = { answered: true, correct: i === q.answer, userAns: i };
+  renderQuestion();
+}
+function answerTF(val) {
+  const q = activeQuestions[currentQ];
+  userAnswers[currentQ] = { answered: true, correct: val === q.answer, userAns: val };
+  renderQuestion();
+}
+function answerShort() {
+  const val = document.getElementById('shortInput').value.trim();
+  if (!val) return;
+  userAnswers[currentQ] = { answered: true, correct: null, userAns: val };
+  renderQuestion();
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function nextQ() {
+  if (currentQ < activeQuestions.length - 1) { currentQ++; renderQuestion(); }
+  else showResults();
+}
+function prevQ() {
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+// ─── RESULTS ─────────────────────────────────────────────────────────────────
+function showResults() {
+  stopTimer();
+  const timeTaken = formatTime(timerSeconds);
+
+  document.getElementById('quizArea').classList.remove('active');
+  document.getElementById('resultsArea').style.display = 'block';
+
+  const total      = activeQuestions.length;
+  const correct    = userAnswers.filter(a => a.correct === true).length;
+  const incorrect  = userAnswers.filter(a => a.correct === false).length;
+  const shortCount = userAnswers.filter((a, i) => activeQuestions[i]?.type === 'short' && a.answered).length;
+  const pct = Math.round((correct / total) * 100);
+
+  const circum = 2 * Math.PI * 52;
+  const offset = circum - (pct / 100) * circum;
+  const ringClass = pct >= 75 ? 'high' : pct >= 50 ? 'mid' : 'low';
+
+  let grade = '', gradeColor = 'var(--ink2)';
+  if (pct >= 75) { grade = 'Excellent'; gradeColor = 'var(--correct)'; }
+  else if (pct >= 50) { grade = 'Keep Revising'; gradeColor = '#e3b341'; }
+  else { grade = 'Needs Work'; gradeColor = 'var(--wrong)'; }
+
+  document.getElementById('resultsCard').innerHTML = `
+    <div class="score-ring">
+      <svg viewBox="0 0 120 120">
+        <circle class="ring-bg" cx="60" cy="60" r="52"/>
+        <circle class="ring-fill ${ringClass}" cx="60" cy="60" r="52"
+          stroke-dasharray="${circum}"
+          stroke-dashoffset="${offset}"
+          id="ringFill"/>
+      </svg>
+      <div class="score-text">${pct}%</div>
+    </div>
+    <div class="results-title">Quiz Complete</div>
+    <div class="results-sub results-grade" style="color:${gradeColor};font-weight:600;font-size:16px;margin-bottom:8px;">${grade}</div>
+    <div class="results-sub">You answered ${userAnswers.filter(a=>a.answered).length} of ${total} questions &nbsp;·&nbsp; ⏱ ${timeTaken}</div>
+    <div class="results-breakdown">
+      <div class="rb-item"><div class="rb-val" id="score-correct" style="color:var(--correct)">${correct}</div><div class="rb-label">Correct</div></div>
+      <div class="rb-item"><div class="rb-val" id="score-incorrect" style="color:var(--wrong)">${incorrect}</div><div class="rb-label">Incorrect</div></div>
+      <div class="rb-item"><div class="rb-val" id="score-self" style="color:var(--muted)">${shortCount}</div><div class="rb-label">Self-Marked</div></div>
+    </div>
+    <div class="results-actions">
+      <button class="nav-btn primary" onclick="retryQuiz()">Retake Quiz</button>
+      <button class="nav-btn" onclick="backToSelector()">Choose New Topics</button>
+      <a href="index.html" class="nav-btn" style="text-decoration:none;display:inline-flex;align-items:center;">Back to Notes</a>
+    </div>
+  `;
+
+  // Review
+  renderReview();
+
+  // Animate ring
+  setTimeout(() => {
+    const ring = document.getElementById('ringFill');
+    if (ring) ring.style.strokeDashoffset = offset;
+  }, 100);
+}
+
+function renderReview() {
+  let reviewHtml = `<div class="review-label">Full Review</div>`;
+  activeQuestions.forEach((q, i) => {
+    const ua = userAnswers[i];
+    if (!ua.answered) return;
+    const isShort = q.type === 'short';
+    const selfMarkedCorrect = isShort && ua.correct === true;
+    const resultClass = isShort
+      ? (selfMarkedCorrect ? 'r-correct' : 'r-wrong')
+      : (ua.correct ? 'r-correct' : 'r-wrong');
+
+    let yourAns = '';
+    if (q.type === 'mc') yourAns = q.options[ua.userAns] || '—';
+    else if (q.type === 'tf') yourAns = ua.userAns === true ? 'True' : 'False';
+    else yourAns = ua.userAns || '—';
+
+    let correctAns = '';
+    if (q.type === 'mc') correctAns = q.options[q.answer];
+    else if (q.type === 'tf') correctAns = q.answer ? 'True' : 'False';
+    else correctAns = q.answer;
+
+    const selfMarkBtn = isShort ? `
+      <button
+        class="self-mark-btn ${selfMarkedCorrect ? 'self-mark-correct' : ''}"
+        onclick="markShortCorrect(${i})"
+        title="${selfMarkedCorrect ? 'Mark as incorrect' : 'Mark as correct'}"
+      >
+        ${selfMarkedCorrect ? '✓ Marked Correct' : 'Mark as Correct'}
+      </button>` : '';
+
+    reviewHtml += `
+      <div class="review-item ${resultClass}" id="review-item-${i}">
+        <div class="r-header">
+          <span class="r-status">${isShort ? (selfMarkedCorrect ? 'Correct' : 'Self-mark') : (ua.correct ? 'Correct' : 'Incorrect')}</span>
+          ${selfMarkBtn}
+        </div>
+        <div class="r-q">Q${i+1}: ${q.q}</div>
+        <div class="r-your"><strong>Your answer:</strong> ${yourAns}</div>
+        ${(!ua.correct || isShort) ? '<div class="r-correct-ans"><strong>' + (isShort ? 'Model answer' : 'Correct answer') + ':</strong> ' + correctAns + '</div>' : ''}
+        ${!isShort ? '<div style="font-size:13px;color:var(--muted);margin-top:6px;">' + q.explanation + '</div>' : ''}
+      </div>
+    `;
+  });
+  document.getElementById('reviewList').innerHTML = reviewHtml;
+}
+
+function markShortCorrect(i) {
+  // Toggle: if already marked correct, unmark it
+  userAnswers[i].correct = userAnswers[i].correct === true ? null : true;
+  renderReview();
+  updateScoreDisplay();
+}
+
+function updateScoreDisplay() {
+  const total   = activeQuestions.length;
+  const correct = userAnswers.filter(a => a.correct === true).length;
+  const pct = Math.round((correct / total) * 100);
+
+  const circum = 2 * Math.PI * 52;
+  const offset = circum - (pct / 100) * circum;
+  const ringClass = pct >= 75 ? 'high' : pct >= 50 ? 'mid' : 'low';
+
+  let grade = '', gradeColor = 'var(--ink2)';
+  if (pct >= 75) { grade = 'Excellent'; gradeColor = 'var(--correct)'; }
+  else if (pct >= 50) { grade = 'Keep Revising'; gradeColor = '#e3b341'; }
+  else { grade = 'Needs Work'; gradeColor = 'var(--wrong)'; }
+
+  const scoreText = document.querySelector('.score-text');
+  if (scoreText) scoreText.textContent = pct + '%';
+
+  const ring = document.getElementById('ringFill');
+  if (ring) {
+    ring.className = `ring-fill ${ringClass}`;
+    ring.style.strokeDashoffset = offset;
+  }
+
+  const gradeEl = document.querySelector('.results-grade');
+  if (gradeEl) { gradeEl.textContent = grade; gradeEl.style.color = gradeColor; }
+
+  const correctEl = document.getElementById('score-correct');
+  const incorrectEl = document.getElementById('score-incorrect');
+  const selfEl = document.getElementById('score-self');
+  const shortAnswered = userAnswers.filter((a, i) => activeQuestions[i]?.type === 'short' && a.answered);
+  const selfMarkedCorrect = shortAnswered.filter(a => a.correct === true).length;
+  const selfUnmarked = shortAnswered.filter(a => a.correct === null).length;
+
+  if (correctEl) correctEl.textContent = correct;
+  if (incorrectEl) incorrectEl.textContent = userAnswers.filter(a => a.correct === false).length;
+  if (selfEl) selfEl.textContent = selfUnmarked;
+}
+
+function retryQuiz() {
+  document.getElementById('resultsArea').style.display = 'none';
+  document.getElementById('reviewList').innerHTML = '';
+  startQuiz();
+}
+
+function backToSelector() {
+  document.getElementById('resultsArea').style.display = 'none';
+  document.getElementById('reviewList').innerHTML = '';
+  document.getElementById('selectorArea').classList.remove('hidden');
+  currentQ = 0; activeQuestions = []; userAnswers = [];
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildTopicGrid();
+
+// ── SIDEBAR TOGGLE ────────────────────────────────────────────────────────────
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const toggle = document.getElementById('sbToggle');
+  const main = document.getElementById('mainContent');
+  const collapsed = sb.classList.toggle('collapsed');
+  toggle.classList.toggle('collapsed', collapsed);
+  main.classList.toggle('expanded', collapsed);
+  toggle.innerHTML = collapsed ? '&#8250;' : '&#8249;';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AS Macroeconomics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{  --bg:#04060f;--bg2:#080c1c;--bg3:#0d1228;
+  --sur:rgba(255,255,255,.032);--sur2:rgba(255,255,255,.06);
+  --bdr:rgba(255,255,255,.07);--bdr2:rgba(56,220,255,.22);
+  --ink:#e8f0ff;--ink2:#7a8faf;--muted:#38485e;
+  --cyan:#38dcff;--volt:#b8ff47;--vio:#a78bfa;
+  --gold:#ffc145;--coral:#ff5f6d;
+  --correct:#39d98a;--wrong:#ff5f6d;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink2);font-family:'Sora',system-ui,sans-serif;font-size:15px;line-height:1.65;overflow-x:hidden}
+#cosmos{position:fixed;inset:0;z-index:0;pointer-events:none}
+.z{position:relative;z-index:2}
+
+/* NAV */
+nav.top{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;height:58px;background:rgba(4,6,15,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr)}
+.nl{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nl-orb{width:26px;height:26px;border:1.5px solid var(--cyan);border-radius:6px;display:flex;align-items:center;
+  justify-content:center;background:rgba(56,220,255,.07)}
+.nl-orb span{font-family:'DM Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:-.03em}
+.nl-txt{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.1em;color:var(--ink)}
+.np{display:flex;align-items:center;gap:2px;background:var(--sur);border:1px solid var(--bdr);border-radius:10px;padding:4px}
+.np a{padding:6px 15px;color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:500;border-radius:7px;
+  transition:all .2s;letter-spacing:.01em}
+.np a:hover{color:var(--ink);background:var(--sur2)}
+.np a.on{color:var(--cyan);background:rgba(56,220,255,.08)}
+.ncta{background:var(--cyan);color:#020408;font-size:12.5px;font-weight:700;padding:9px 22px;border-radius:7px;
+  text-decoration:none;letter-spacing:.04em;transition:all .2s;box-shadow:0 0 18px rgba(56,220,255,.2)}
+.ncta:hover{transform:translateY(-1px);box-shadow:0 0 28px rgba(56,220,255,.38)}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;place-items:center;padding:96px 52px 56px;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:800px;height:260px;
+  background:radial-gradient(ellipse at bottom,rgba(56,220,255,.065) 0%,transparent 70%);pointer-events:none}
+.h-eye{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:26px;
+  opacity:0;animation:rise .7s .1s ease forwards}
+.h-eye::before,.h-eye::after{content:'';display:block;width:22px;height:1px;background:var(--cyan);opacity:.45}
+.hero-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,12vw,156px);line-height:.9;color:var(--ink);
+  letter-spacing:.02em;margin-bottom:22px;opacity:0;animation:rise .8s .2s ease forwards}
+.hero-h .ol{color:transparent;-webkit-text-stroke:1.5px var(--cyan);text-shadow:0 0 55px rgba(56,220,255,.18)}
+.hero-sub{font-size:17px;color:var(--ink2);max-width:470px;margin:0 auto 42px;font-weight:300;line-height:1.7;
+  opacity:0;animation:rise .8s .35s ease forwards}
+.hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;animation:rise .8s .5s ease forwards}
+.bs{background:var(--cyan);color:#020408;font-size:14px;font-weight:700;padding:13px 30px;border-radius:8px;
+  text-decoration:none;letter-spacing:.03em;transition:all .2s;box-shadow:0 0 24px rgba(56,220,255,.22)}
+.bs:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(56,220,255,.4)}
+.bo{background:transparent;color:var(--ink2);font-size:14px;font-weight:500;padding:13px 30px;border-radius:8px;
+  text-decoration:none;border:1px solid var(--bdr2);transition:all .2s}
+.bo:hover{color:var(--ink);border-color:var(--cyan);background:rgba(56,220,255,.04);transform:translateY(-2px)}
+.scue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;
+  align-items:center;gap:6px;opacity:0;animation:rise 1s 1.1s ease forwards}
+.scue-l{width:1px;height:42px;background:linear-gradient(to bottom,var(--muted),transparent);
+  animation:drip 2s ease-in-out infinite}
+.scue span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+
+/* TICKER */
+.ticker{border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);background:var(--sur);
+  overflow:hidden;height:40px;display:flex;align-items:center}
+.ticker-t{display:flex;gap:42px;animation:roll 34s linear infinite;white-space:nowrap;padding:0 42px}
+.ti{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--muted);
+  text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.td{width:4px;height:4px;background:var(--cyan);border-radius:50%}
+
+/* STATS */
+.swrap{max-width:1140px;margin:0 auto;padding:72px 52px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--bdr);border-radius:12px;
+  overflow:hidden;background:var(--bg2)}
+.stat{padding:34px 22px;border-right:1px solid var(--bdr);text-align:center}
+.stat:last-child{border-right:none}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:50px;letter-spacing:.03em;color:var(--ink);line-height:1;margin-bottom:5px}
+.sn sup{font-size:22px;color:var(--cyan)}
+.sl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+
+/* SECTION */
+.sec{max-width:1140px;margin:0 auto;padding:84px 52px}
+.sec-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sec-lbl::after{content:'';flex:1;height:1px;max-width:50px;background:linear-gradient(to right,var(--cyan),transparent);opacity:.4}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,58px);color:var(--ink);
+  letter-spacing:.03em;line-height:1;margin-bottom:10px}
+.sec-sub{color:var(--ink2);font-size:15px;font-weight:300;max-width:430px;margin-bottom:48px}
+
+/* PANELS */
+.panels{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr);
+  border-radius:14px;overflow:hidden;border:1px solid var(--bdr)}
+.panel{background:var(--bg2);padding:38px 32px;text-decoration:none;position:relative;
+  overflow:hidden;transition:background .25s;display:flex;flex-direction:column}
+.panel:hover{background:var(--bg3)}
+.panel::after{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;opacity:0;transition:opacity .25s}
+.panel:hover::after{opacity:1}
+.pc::after{background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.pv::after{background:linear-gradient(90deg,transparent,var(--volt),transparent)}
+.pp::after{background:linear-gradient(90deg,transparent,var(--vio),transparent)}
+.panel::before{content:'';position:absolute;top:-60px;left:-60px;width:180px;height:180px;
+  border-radius:50%;opacity:0;transition:opacity .35s;pointer-events:none}
+.panel:hover::before{opacity:1}
+.pc:hover::before{background:radial-gradient(circle,rgba(56,220,255,.055),transparent 70%)}
+.pv:hover::before{background:radial-gradient(circle,rgba(184,255,71,.055),transparent 70%)}
+.pp:hover::before{background:radial-gradient(circle,rgba(167,139,250,.055),transparent 70%)}
+.p-num{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;margin-bottom:24px;opacity:.4}
+.pc .p-num{color:var(--cyan)}.pv .p-num{color:var(--volt)}.pp .p-num{color:var(--vio)}
+.p-ico{font-size:26px;margin-bottom:14px}
+.p-ttl{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.03em;color:var(--ink);line-height:1;margin-bottom:10px}
+.p-dsc{font-size:13px;color:var(--ink2);font-weight:300;line-height:1.65;flex:1;margin-bottom:24px}
+.p-lnk{font-size:11px;font-weight:700;letter-spacing:.07em;display:inline-flex;align-items:center;
+  gap:6px;transition:gap .2s;text-transform:uppercase}
+.panel:hover .p-lnk{gap:10px}
+.pc .p-lnk{color:var(--cyan)}.pv .p-lnk{color:var(--volt)}.pp .p-lnk{color:var(--vio)}
+
+/* MODULES */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:6px}
+.mc{background:var(--sur);border:1px solid var(--bdr);border-radius:8px;padding:12px 14px;
+  text-decoration:none;transition:all .15s;display:block}
+.mc:hover{border-color:rgba(56,220,255,.26);background:rgba(56,220,255,.025);transform:translateY(-1px)}
+.mc-n{font-family:'DM Mono',monospace;font-size:9px;color:var(--cyan);letter-spacing:.1em;margin-bottom:4px}
+.mc-t{font-size:12px;font-weight:500;color:var(--ink2);line-height:1.3}
+
+/* FOOTER */
+footer{border-top:1px solid var(--bdr);padding:28px 52px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer p{font-size:12px;color:var(--muted)}
+.fmark{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.1em;color:var(--muted)}
+
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes drip{0%,100%{transform:scaleY(1);opacity:.5}50%{transform:scaleY(1.3);opacity:1}}
+@keyframes roll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+<canvas id="cosmos"></canvas>
+<div class="z">
+
+<nav class="top">
+  <a href="home.html" class="nl">
+    <div class="nl-orb"><span>M</span></div>
+    <span class="nl-txt">AS Macro</span>
+  </a>
+  <div class="np">
+    <a href="home.html" class="on">Home</a>
+    <a href="index.html">Notes</a>
+    <a href="quiz.html">Practice</a>
+    <a href="exampaper.html">Papers</a>
+  </div>
+  <a href="quiz.html" class="ncta">Start Quiz &rarr;</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="h-eye">AS Level &middot; Economics &middot; Macroeconomics</div>
+    <h1 class="hero-h">MASTER<br><span class="ol">MACRO</span></h1>
+    <p class="hero-sub">Complete notes, interactive quizzes and past exam papers &mdash; everything you need to ace AS Level Economics.</p>
+    <div class="hbtns">
+      <a href="index.html" class="bs">Open Notes &rarr;</a>
+      <a href="quiz.html" class="bo">Take a Quiz</a>
+    </div>
+  </div>
+  <div class="scue">
+    <div class="scue-l"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-t">
+    <span class="ti"><span class="td"></span>Aggregate Demand</span>
+    <span class="ti"><span class="td"></span>Fiscal Policy</span>
+    <span class="ti"><span class="td"></span>Inflation</span>
+    <span class="ti"><span class="td"></span>Monetary Policy</span>
+    <span class="ti"><span class="td"></span>Exchange Rates</span>
+    <span class="ti"><span class="td"></span>Unemployment</span>
+    <span class="ti"><span class="td"></span>Balance of Payments</span>
+    <span class="ti"><span class="td"></span>Multiplier Effect</span>
+    <span class="ti"><span class="td"></span>Supply-Side Policy</span>
+    <span class="ti"><span class="td"></span>Economic Growth</span>
+    <span class="ti"><span class="td"></span>AD/AS Equilibrium</span>
+    <span class="ti"><span class="td"></span>Aggregate Demand</span>
+    <span class="ti"><span class="td"></span>Fiscal Policy</span>
+    <span class="ti"><span class="td"></span>Inflation</span>
+    <span class="ti"><span class="td"></span>Monetary Policy</span>
+    <span class="ti"><span class="td"></span>Exchange Rates</span>
+    <span class="ti"><span class="td"></span>Unemployment</span>
+    <span class="ti"><span class="td"></span>Balance of Payments</span>
+    <span class="ti"><span class="td"></span>Multiplier Effect</span>
+    <span class="ti"><span class="td"></span>Supply-Side Policy</span>
+    <span class="ti"><span class="td"></span>Economic Growth</span>
+    <span class="ti"><span class="td"></span>AD/AS Equilibrium</span>
+  </div>
+</div>
+
+<div class="swrap">
+  <div class="stats">
+    <div class="stat"><div class="sn">20<sup>+</sup></div><div class="sl">Modules</div></div>
+    <div class="stat"><div class="sn">150<sup>+</sup></div><div class="sl">Questions</div></div>
+    <div class="stat"><div class="sn">9<sup>+</sup></div><div class="sl">Past Papers</div></div>
+    <div class="stat"><div class="sn">10</div><div class="sl">Paper Sets</div></div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-lbl">What&rsquo;s inside</div>
+  <div class="sec-h">EVERYTHING IN ONE PLACE</div>
+  <p class="sec-sub">Three tools built to take you from first read to exam-ready.</p>
+  <div class="panels">
+    <a href="index.html" class="panel pc">
+      <div class="p-num">01 / STUDY</div>
+      <div class="p-ico">&#128216;</div>
+      <div class="p-ttl">CONTENT NOTES</div>
+      <p class="p-dsc">All 20 modules &mdash; definitions, diagrams, analysis cards and model answers in one clean page.</p>
+      <div class="p-lnk">Open Notes &rarr;</div>
+    </a>
+    <a href="quiz.html" class="panel pv">
+      <div class="p-num">02 / PRACTICE</div>
+      <div class="p-ico">&#9889;</div>
+      <div class="p-ttl">KNOWLEDGE TEST</div>
+      <p class="p-dsc">150+ questions across all topics. MCQ, True/False and short answer with live scoring and timer.</p>
+      <div class="p-lnk">Start Quiz &rarr;</div>
+    </a>
+    <a href="exampaper.html" class="panel pp">
+      <div class="p-num">03 / EXAM PREP</div>
+      <div class="p-ico">&#128196;</div>
+      <div class="p-ttl">EXAM PAPERS</div>
+      <p class="p-dsc">Topic-by-topic exam questions with full mark schemes. Practice then self-assess instantly.</p>
+      <div class="p-lnk">View Papers &rarr;</div>
+    </a>
+  </div>
+</div>
+
+<div class="sec" style="padding-top:0">
+  <div class="sec-lbl">Syllabus</div>
+  <div class="sec-h">ALL MODULES</div>
+  <p class="sec-sub" style="margin-bottom:34px">Every topic on the AS Macroeconomics specification.</p>
+  <div class="mgrid">
+    <a href="index.html#m1"  class="mc"><div class="mc-n">M01</div><div class="mc-t">Policy Objectives</div></a>
+    <a href="index.html#m2"  class="mc"><div class="mc-n">M02</div><div class="mc-t">Circular Flow</div></a>
+    <a href="index.html#m3"  class="mc"><div class="mc-n">M03</div><div class="mc-t">Aggregate Demand</div></a>
+    <a href="index.html#m4"  class="mc"><div class="mc-n">M04</div><div class="mc-t">AD Curve</div></a>
+    <a href="index.html#m5"  class="mc"><div class="mc-n">M05</div><div class="mc-t">Aggregate Supply</div></a>
+    <a href="index.html#m6"  class="mc"><div class="mc-n">M06</div><div class="mc-t">Macro Equilibrium</div></a>
+    <a href="index.html#m7"  class="mc"><div class="mc-n">M07</div><div class="mc-t">Inflation Measurement</div></a>
+    <a href="index.html#m8"  class="mc"><div class="mc-n">M08</div><div class="mc-t">Inflation Causes</div></a>
+    <a href="index.html#m9"  class="mc"><div class="mc-n">M09</div><div class="mc-t">Unemployment Measure</div></a>
+    <a href="index.html#m10" class="mc"><div class="mc-n">M10</div><div class="mc-t">Unemployment Causes</div></a>
+    <a href="index.html#m11" class="mc"><div class="mc-n">M11</div><div class="mc-t">Economic Growth</div></a>
+    <a href="index.html#m12" class="mc"><div class="mc-n">M12</div><div class="mc-t">Growth Causes</div></a>
+    <a href="index.html#m13" class="mc"><div class="mc-n">M13</div><div class="mc-t">Multiplier</div></a>
+    <a href="index.html#m14" class="mc"><div class="mc-n">M14</div><div class="mc-t">Macro Indicators</div></a>
+    <a href="index.html#m15" class="mc"><div class="mc-n">M15</div><div class="mc-t">Fiscal Policy</div></a>
+    <a href="index.html#m16" class="mc"><div class="mc-n">M16</div><div class="mc-t">Monetary Policy</div></a>
+    <a href="index.html#m17" class="mc"><div class="mc-n">M17</div><div class="mc-t">Supply-Side Policy</div></a>
+    <a href="index.html#m19" class="mc"><div class="mc-n">M19</div><div class="mc-t">Balance of Payments</div></a>
+    <a href="index.html#m20" class="mc"><div class="mc-n">M20</div><div class="mc-t">BoP Imbalances</div></a>
+    <a href="index.html#m21" class="mc"><div class="mc-n">M21</div><div class="mc-t">Exchange Rates</div></a>
+  </div>
+</div>
+
+<footer>
+  <div class="fmark">AS MACRO</div>
+  <p>AS Level Economics &middot; Macroeconomics &middot; Study Resource</p>
+  <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.04em;">Made by <span style="color:var(--cyan)">Jarif</span> &copy; 2025</p>
+</footer>
+</div>
+
+<script>
+// ── COSMOS: STARS + SHOOTING STARS ──────────────────────────────────────────
+const cvs = document.getElementById('cosmos');
+const ctx = cvs.getContext('2d');
+let W, H, stars = [], meteors = [];
+
+function resize() {
+  W = cvs.width = innerWidth;
+  H = cvs.height = innerHeight;
+  buildStars();
+}
+
+function buildStars() {
+  stars = [];
+  const n = Math.floor(W * H / 4200);
+  for (let i = 0; i < n; i++) {
+    stars.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.2 + 0.15,
+      a: Math.random() * 0.55 + 0.06,
+      da: (Math.random() * 0.008 + 0.002) * (Math.random() > .5 ? 1 : -1),
+    });
+  }
+}
+
+class ShootingStar {
+  constructor(delay) {
+    this.delay = delay || 0;
+    this.active = false;
+    this.reset();
+    this.timer = -delay;
+  }
+  reset() {
+    // Start from top-left quadrant, shoot diagonally down-right
+    this.x = Math.random() * W * 0.7;
+    this.y = Math.random() * H * 0.45;
+    const angle = (Math.PI / 180) * (Math.random() * 25 + 20); // 20-45 degrees
+    const speed = Math.random() * 8 + 6;
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    this.len = Math.random() * 200 + 100;
+    this.alpha = 0;
+    this.maxAlpha = Math.random() * 0.7 + 0.3;
+    this.phase = 'in'; // in | cruise | out
+    this.ticks = 0;
+    this.cruiseTicks = Math.floor(Math.random() * 35 + 20);
+    this.w = Math.random() * 1.6 + 0.5;
+    // Colour: mostly white/blue-white, 25% chance cyan
+    this.cyan = Math.random() > 0.75;
+  }
+  tick() {
+    this.timer++;
+    if (this.timer < 0) return; // delay
+    
+    this.x += this.vx;
+    this.y += this.vy;
+    this.ticks++;
+    
+    if (this.phase === 'in') {
+      this.alpha = Math.min(this.alpha + this.maxAlpha / 10, this.maxAlpha);
+      if (this.alpha >= this.maxAlpha) this.phase = 'cruise';
+    } else if (this.phase === 'cruise') {
+      if (this.ticks > this.cruiseTicks) this.phase = 'out';
+    } else {
+      this.alpha -= this.maxAlpha / 14;
+    }
+    
+    if (this.alpha <= 0 || this.x > W + 400 || this.y > H + 200) {
+      // Respawn after a pause
+      this.timer = -(Math.random() * 180 + 60);
+      this.reset();
+    }
+  }
+  draw() {
+    if (this.timer < 0 || this.alpha <= 0) return;
+    const spd = Math.hypot(this.vx, this.vy);
+    const tx = this.x - (this.vx / spd) * this.len;
+    const ty = this.y - (this.vy / spd) * this.len;
+    
+    const g = ctx.createLinearGradient(tx, ty, this.x, this.y);
+    const col = this.cyan ? `56,220,255` : `200,220,255`;
+    g.addColorStop(0, `rgba(${col},0)`);
+    g.addColorStop(0.7, `rgba(${col},${this.alpha * 0.4})`);
+    g.addColorStop(1, `rgba(${col},${this.alpha})`);
+    
+    ctx.beginPath();
+    ctx.moveTo(tx, ty);
+    ctx.lineTo(this.x, this.y);
+    ctx.strokeStyle = g;
+    ctx.lineWidth = this.w;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    
+    // Bright tip
+    const tipGlow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.w * 4);
+    tipGlow.addColorStop(0, `rgba(${col},${this.alpha})`);
+    tipGlow.addColorStop(1, `rgba(${col},0)`);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.w * 3, 0, Math.PI * 2);
+    ctx.fillStyle = tipGlow;
+    ctx.fill();
+  }
+}
+
+// Create meteors with staggered delays so they don't all fire at once
+for (let i = 0; i < 5; i++) {
+  meteors.push(new ShootingStar(i * 70));
+}
+
+function frame() {
+  ctx.clearRect(0, 0, W, H);
+  
+  // Stars
+  for (const s of stars) {
+    s.a += s.da;
+    if (s.a > 0.62 || s.a < 0.05) s.da *= -1;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(150,195,255,${s.a})`;
+    ctx.fill();
+  }
+  
+  // Shooting stars
+  for (const m of meteors) {
+    m.tick();
+    m.draw();
+  }
+  
+  requestAnimationFrame(frame);
+}
+
+resize();
+window.addEventListener('resize', resize);
+frame();
+</script>
+</body></html>
