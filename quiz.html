@@ -613,7 +613,6 @@
     color: var(--correct);
   }
   .review-item .r-status {
-    float: right;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -623,6 +622,45 @@
   }
   .r-correct .r-status { background: var(--correct-bg); color: var(--correct); }
   .r-wrong   .r-status { background: var(--wrong-bg);   color: var(--wrong); }
+
+  .r-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .self-mark-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 5px;
+    padding: 5px 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .self-mark-btn:hover {
+    border-color: var(--correct);
+    color: var(--correct);
+    background: var(--correct-bg);
+  }
+  .self-mark-btn.self-mark-correct {
+    background: var(--correct-bg);
+    border-color: var(--correct);
+    color: var(--correct);
+    font-weight: 600;
+  }
+  .self-mark-btn.self-mark-correct:hover {
+    border-color: var(--wrong);
+    color: var(--wrong);
+    background: var(--wrong-bg);
+  }
 
   /* BACK LINK */
   .back-link {
@@ -1197,12 +1235,12 @@ function showResults() {
       <div class="score-text">${pct !== null ? pct + '%' : '—'}</div>
     </div>
     <div class="results-title">Quiz Complete</div>
-    <div class="results-sub" style="color:${gradeColor};font-weight:600;font-size:16px;margin-bottom:8px;">${grade}</div>
+    <div class="results-sub results-grade" style="color:${gradeColor};font-weight:600;font-size:16px;margin-bottom:8px;">${grade}</div>
     <div class="results-sub">You answered ${answered.length} of ${activeQuestions.length} questions</div>
     <div class="results-breakdown">
-      <div class="rb-item"><div class="rb-val" style="color:var(--correct)">${correct}</div><div class="rb-label">Correct</div></div>
-      <div class="rb-item"><div class="rb-val" style="color:var(--wrong)">${total - correct}</div><div class="rb-label">Incorrect</div></div>
-      <div class="rb-item"><div class="rb-val" style="color:var(--muted)">${shortCount}</div><div class="rb-label">Self-Marked</div></div>
+      <div class="rb-item"><div class="rb-val" id="score-correct" style="color:var(--correct)">${correct}</div><div class="rb-label">Correct</div></div>
+      <div class="rb-item"><div class="rb-val" id="score-incorrect" style="color:var(--wrong)">${total - correct}</div><div class="rb-label">Incorrect</div></div>
+      <div class="rb-item"><div class="rb-val" id="score-self" style="color:var(--muted)">${shortCount}</div><div class="rb-label">Self-Marked</div></div>
     </div>
     <div class="results-actions">
       <button class="nav-btn primary" onclick="retryQuiz()">Retake Quiz</button>
@@ -1212,13 +1250,25 @@ function showResults() {
   `;
 
   // Review
+  renderReview();
+
+  // Animate ring
+  setTimeout(() => {
+    const ring = document.getElementById('ringFill');
+    if (ring) ring.style.strokeDashoffset = offset;
+  }, 100);
+}
+
+function renderReview() {
   let reviewHtml = `<div class="review-label">Full Review</div>`;
   activeQuestions.forEach((q, i) => {
     const ua = userAnswers[i];
     if (!ua.answered) return;
     const isShort = q.type === 'short';
-    const resultClass = isShort ? 'r-wrong' : (ua.correct ? 'r-correct' : 'r-wrong');
-    const statusLabel = isShort ? 'Self-mark' : (ua.correct ? 'Correct' : 'Incorrect');
+    const selfMarkedCorrect = isShort && ua.correct === true;
+    const resultClass = isShort
+      ? (selfMarkedCorrect ? 'r-correct' : 'r-wrong')
+      : (ua.correct ? 'r-correct' : 'r-wrong');
 
     let yourAns = '';
     if (q.type === 'mc') yourAns = q.options[ua.userAns] || '—';
@@ -1230,9 +1280,21 @@ function showResults() {
     else if (q.type === 'tf') correctAns = q.answer ? 'True' : 'False';
     else correctAns = q.answer;
 
+    const selfMarkBtn = isShort ? `
+      <button
+        class="self-mark-btn ${selfMarkedCorrect ? 'self-mark-correct' : ''}"
+        onclick="markShortCorrect(${i})"
+        title="${selfMarkedCorrect ? 'Mark as incorrect' : 'Mark as correct'}"
+      >
+        ${selfMarkedCorrect ? '✓ Marked Correct' : 'Mark as Correct'}
+      </button>` : '';
+
     reviewHtml += `
-      <div class="review-item ${resultClass}">
-        <span class="r-status">${statusLabel}</span>
+      <div class="review-item ${resultClass}" id="review-item-${i}">
+        <div class="r-header">
+          <span class="r-status">${isShort ? (selfMarkedCorrect ? 'Correct' : 'Self-mark') : (ua.correct ? 'Correct' : 'Incorrect')}</span>
+          ${selfMarkBtn}
+        </div>
         <div class="r-q">Q${i+1}: ${q.q}</div>
         <div class="r-your"><strong>Your answer:</strong> ${yourAns}</div>
         ${!ua.correct || isShort ? `<div class="r-correct-ans"><strong>${isShort ? 'Model answer' : 'Correct answer'}:</strong> ${correctAns}</div>` : ''}
@@ -1241,15 +1303,57 @@ function showResults() {
     `;
   });
   document.getElementById('reviewList').innerHTML = reviewHtml;
-
-  // Animate ring
-  setTimeout(() => {
-    const ring = document.getElementById('ringFill');
-    if (ring) ring.style.strokeDashoffset = offset;
-  }, 100);
 }
 
-function retryQuiz() {
+function markShortCorrect(i) {
+  // Toggle: if already marked correct, unmark it
+  userAnswers[i].correct = userAnswers[i].correct === true ? null : true;
+  renderReview();
+  updateScoreDisplay();
+}
+
+function updateScoreDisplay() {
+  const answered = userAnswers.filter(a => a.answered);
+  const gradable  = userAnswers.filter(a => a.correct !== null);
+  const correct   = gradable.filter(a => a.correct).length;
+  const total     = answered.length;
+  const pct = gradable.length > 0 ? Math.round((correct / gradable.length) * 100) : null;
+
+  const circum = 2 * Math.PI * 52;
+  const offset = pct !== null ? circum - (pct / 100) * circum : circum;
+  const ringClass = pct === null ? '' : pct >= 75 ? 'high' : pct >= 50 ? 'mid' : 'low';
+
+  let grade = '', gradeColor = 'var(--ink2)';
+  if (pct === null) { grade = 'Self-assessed'; }
+  else if (pct >= 75) { grade = 'Excellent'; gradeColor = '#56d364'; }
+  else if (pct >= 50) { grade = 'Keep Revising'; gradeColor = '#e3b341'; }
+  else { grade = 'Needs Work'; gradeColor = '#f85149'; }
+
+  const scoreText = document.querySelector('.score-text');
+  if (scoreText) scoreText.textContent = pct !== null ? pct + '%' : '—';
+
+  const ring = document.getElementById('ringFill');
+  if (ring) {
+    ring.className = `ring-fill ${ringClass}`;
+    ring.style.strokeDashoffset = offset;
+  }
+
+  const gradeEl = document.querySelector('.results-grade');
+  if (gradeEl) { gradeEl.textContent = grade; gradeEl.style.color = gradeColor; }
+
+  const correctEl = document.getElementById('score-correct');
+  const incorrectEl = document.getElementById('score-incorrect');
+  const selfEl = document.getElementById('score-self');
+  const shortAnswered = userAnswers.filter((a, i) => activeQuestions[i]?.type === 'short' && a.answered);
+  const selfMarkedCorrect = shortAnswered.filter(a => a.correct === true).length;
+  const selfUnmarked = shortAnswered.filter(a => a.correct === null).length;
+
+  if (correctEl) correctEl.textContent = correct;
+  if (incorrectEl) incorrectEl.textContent = gradable.filter(a => !a.correct).length;
+  if (selfEl) selfEl.textContent = selfUnmarked;
+}
+
+
   document.getElementById('resultsArea').style.display = 'none';
   document.getElementById('reviewList').innerHTML = '';
   startQuiz();
