@@ -1297,8 +1297,8 @@ function renderReview() {
         </div>
         <div class="r-q">Q${i+1}: ${q.q}</div>
         <div class="r-your"><strong>Your answer:</strong> ${yourAns}</div>
-        ${!ua.correct || isShort ? `<div class="r-correct-ans"><strong>${isShort ? 'Model answer' : 'Correct answer'}:</strong> ${correctAns}</div>` : ''}
-        ${!isShort ? `<div style="font-size:13px;color:var(--muted);margin-top:6px;">${q.explanation}</div>` : ''}
+        ${(!ua.correct || isShort) ? '<div class="r-correct-ans"><strong>' + (isShort ? 'Model answer' : 'Correct answer') + ':</strong> ' + correctAns + '</div>' : ''}
+        ${!isShort ? '<div style="font-size:13px;color:var(--muted);margin-top:6px;">' + q.explanation + '</div>' : ''}
       </div>
     `;
   });
@@ -1353,7 +1353,7 @@ function updateScoreDisplay() {
   if (selfEl) selfEl.textContent = selfUnmarked;
 }
 
-
+function retryQuiz() {
   document.getElementById('resultsArea').style.display = 'none';
   document.getElementById('reviewList').innerHTML = '';
   startQuiz();
