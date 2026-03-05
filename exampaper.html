@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Exam Papers &mdash; AS Macroeconomics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{  --bg:#04060f;--bg2:#080c1c;--bg3:#0d1228;
+  --sur:rgba(255,255,255,.032);--sur2:rgba(255,255,255,.06);
+  --bdr:rgba(255,255,255,.07);--bdr2:rgba(56,220,255,.22);
+  --ink:#e8f0ff;--ink2:#7a8faf;--muted:#38485e;
+  --cyan:#38dcff;--volt:#b8ff47;--vio:#a78bfa;
+  --gold:#ffc145;--coral:#ff5f6d;
+  --correct:#39d98a;--wrong:#ff5f6d;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink2);font-family:'Outfit',system-ui,sans-serif;font-size:15px;line-height:1.65}
+
+  .sidebar{position:fixed;top:0;left:0;width:230px;height:100vh;background:var(--bg2);
+    border-right:1px solid var(--bdr);overflow-y:auto;z-index:100;scrollbar-width:thin;scrollbar-color:var(--bdr) transparent}
+  .sidebar::-webkit-scrollbar{width:3px}
+  .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.07)}
+  .sb-brand{display:flex;align-items:center;gap:10px;padding:18px 20px;border-bottom:1px solid var(--bdr);text-decoration:none}
+  .sb-orb{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);flex-shrink:0}
+  .sb-name{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.1em;color:var(--ink)}
+  .sb-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.05em;margin-top:1px}
+  .sb-sec{padding:18px 20px 5px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .mn{font-family:'DM Mono',monospace;font-size:9px;color:var(--cyan);opacity:.55;margin-right:7px;letter-spacing:.05em}
+  .sidebar a{display:block;padding:7px 20px;color:var(--muted);text-decoration:none;font-size:12.5px;
+    transition:all .15s;border-left:2px solid transparent;line-height:1.4}
+  .sidebar a:hover{color:var(--ink);background:rgba(56,220,255,.03);border-left-color:rgba(56,220,255,.28)}
+  .sidebar a.on{color:var(--cyan);border-left-color:var(--cyan);background:rgba(56,220,255,.05)}
+  .main{margin-left:230px;padding:48px 60px 80px;max-width:1100px}
+
+
+/* PAGE HERO */
+.pg-hero{margin-bottom:48px;padding-bottom:36px;border-bottom:1px solid var(--bdr)}
+.pg-eye{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--vio);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.pg-eye::before{content:'';display:block;width:18px;height:1px;background:var(--vio)}
+.pg-h{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:.03em;color:var(--ink);line-height:1;margin-bottom:10px}
+.pg-sub{font-size:14px;color:var(--ink2);font-weight:300;max-width:500px}
+
+/* FILTER */
+.filters{display:flex;gap:7px;margin-bottom:28px;flex-wrap:wrap}
+.fb{background:var(--bg2);border:1px solid var(--bdr);color:var(--muted);border-radius:6px;
+  padding:7px 15px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;cursor:pointer;
+  transition:all .15s;letter-spacing:.03em}
+.fb:hover{color:var(--ink);border-color:var(--bdr2)}
+.fb.on{background:rgba(167,139,250,.08);border-color:var(--vio);color:var(--vio)}
+
+/* NOTICE */
+.notice{background:rgba(56,220,255,.04);border:1px solid rgba(56,220,255,.12);border-radius:10px;
+  padding:16px 20px;margin-bottom:28px;font-size:13px;color:var(--ink2);display:flex;gap:10px;align-items:flex-start}
+.ni{color:var(--cyan);flex-shrink:0;margin-top:1px}
+
+/* SECTION LABEL */
+.ps-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);margin:36px 0 12px}
+.ps-lbl:first-of-type{margin-top:0}
+
+/* PAPER CARDS */
+.pgrid{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
+.pcard{background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;padding:18px 22px;
+  display:flex;align-items:center;gap:18px;transition:all .15s;cursor:pointer}
+.pcard:hover{border-color:rgba(167,139,250,.25);background:var(--bg3);transform:translateX(3px)}
+.pico{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.pic{background:rgba(56,220,255,.09);border:1px solid rgba(56,220,255,.2)}
+.pip{background:rgba(167,139,250,.09);border:1px solid rgba(167,139,250,.2)}
+.pig{background:rgba(255,193,69,.09);border:1px solid rgba(255,193,69,.2)}
+.pinfo{flex:1;min-width:0}
+.pt{font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.pm{font-size:11.5px;color:var(--muted);display:flex;gap:10px}
+.pbdgs{display:flex;gap:5px;flex-shrink:0;align-items:center}
+.bdg{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+.bc{background:rgba(56,220,255,.08);border:1px solid rgba(56,220,255,.18);color:var(--cyan)}
+.bp{background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.18);color:var(--vio)}
+.bg{background:rgba(255,193,69,.08);border:1px solid rgba(255,193,69,.18);color:var(--gold)}
+.bgrn{background:rgba(57,217,138,.08);border:1px solid rgba(57,217,138,.18);color:var(--correct)}
+.pacts{display:flex;gap:7px;flex-shrink:0}
+.pbtn{background:transparent;border:1px solid var(--bdr);color:var(--muted);border-radius:6px;
+  padding:7px 13px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;cursor:pointer;
+  transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.pbtn:hover{color:var(--ink);border-color:var(--bdr2)}
+.pbtn.pri{background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.3);color:var(--vio)}
+.pbtn.pri:hover{background:rgba(167,139,250,.13)}
+
+/* MODAL */
+.movr{position:fixed;inset:0;z-index:200;background:rgba(4,6,15,.88);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .2s}
+.movr.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--bdr2);border-radius:14px;
+  width:100%;max-width:700px;max-height:86vh;overflow-y:auto;padding:38px;
+  transform:translateY(14px);transition:transform .2s}
+.movr.open .modal{transform:translateY(0)}
+.mhdr{display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--bdr);gap:14px}
+.mcls{background:var(--bg3);border:1px solid var(--bdr);color:var(--muted);
+  width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:14px;flex-shrink:0;
+  transition:all .15s;display:flex;align-items:center;justify-content:center}
+.mcls:hover{color:var(--ink);border-color:var(--bdr2)}
+.mtitle{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.02em;color:var(--ink);margin-bottom:5px}
+.msub{font-size:12px;color:var(--muted)}
+.qblk{background:var(--bg3);border:1px solid var(--bdr);border-radius:9px;padding:18px 20px;margin-bottom:12px}
+.qn{font-family:'DM Mono',monospace;font-size:9px;color:var(--vio);letter-spacing:.08em;margin-bottom:7px}
+.qt{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:8px;line-height:1.5}
+.qm{font-size:11px;color:var(--muted)}
+.ms-tog{background:rgba(57,217,138,.05);border:1px solid rgba(57,217,138,.14);color:var(--correct);
+  border-radius:6px;padding:7px 14px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .15s;margin-top:10px;display:inline-flex;align-items:center;gap:5px}
+.ms-tog:hover{background:rgba(57,217,138,.1)}
+.ms{margin-top:10px;padding:13px 15px;background:rgba(57,217,138,.04);border:1px solid rgba(57,217,138,.11);
+  border-radius:7px;font-size:13px;color:var(--ink2);line-height:1.65;display:none}
+.ms.show{display:block}
+.ms strong{color:var(--correct)}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <a href="home.html" class="sb-brand"><div class="sb-orb"></div><div><div class="sb-name">AS MACRO</div><div class="sb-sub">Economics</div></div></a>
+  <div class="sb-sec">Navigation</div>
+  <a href="home.html">Home</a>
+  <a href="index.html">Study Notes</a>
+  <a href="quiz.html">Knowledge Test</a>
+  <a href="exampaper.html" class="on">Exam Papers</a>
+</nav>
+
+
+<main class="main">
+  <div class="pg-hero">
+    <div class="pg-eye">Exam Prep</div>
+    <div class="pg-h">PAST EXAM PAPERS</div>
+    <p class="pg-sub">Exam-style questions organised by topic. Attempt each question then reveal the mark scheme to assess yourself.</p>
+  </div>
+
+  <div class="notice"><div class="ni">&#9432;</div>
+    <div>These are exam-style practice questions based on the AS Level Macroeconomics syllabus. Always attempt before revealing the mark scheme &mdash; retrieval practice is the most effective revision technique.</div>
+  </div>
+
+  <div class="filters">
+    <button class="fb on" onclick="filter('all',this)">All Topics</button>
+    <button class="fb" onclick="filter('demand',this)">Demand-Side</button>
+    <button class="fb" onclick="filter('supply',this)">Supply-Side</button>
+    <button class="fb" onclick="filter('policy',this)">Policy</button>
+    <button class="fb" onclick="filter('external',this)">External</button>
+    <button class="fb" onclick="filter('indicators',this)">Indicators</button>
+  </div>
+
+  <div class="ps-lbl" data-cat="demand supply indicators">MACROECONOMIC FUNDAMENTALS</div>
+  <div class="pgrid">
+    <div class="pcard" data-cat="demand" onclick="openPaper('ad')">
+      <div class="pico pic">&#128202;</div>
+      <div class="pinfo"><div class="pt">Aggregate Demand &amp; AD Curve</div><div class="pm"><span>&#128336; 25 min</span><span>M3 &middot; M4</span><span>5 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bc">Demand-Side</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+    <div class="pcard" data-cat="supply" onclick="openPaper('as')">
+      <div class="pico pip">&#128200;</div>
+      <div class="pinfo"><div class="pt">Aggregate Supply &amp; Equilibrium</div><div class="pm"><span>&#128336; 30 min</span><span>M5 &middot; M6</span><span>5 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bp">Supply-Side</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+    <div class="pcard" data-cat="indicators" onclick="openPaper('inflation')">
+      <div class="pico pig">&#128293;</div>
+      <div class="pinfo"><div class="pt">Inflation &mdash; Measurement &amp; Causes</div><div class="pm"><span>&#128336; 30 min</span><span>M7 &middot; M8</span><span>6 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bg">Indicators</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+    <div class="pcard" data-cat="indicators" onclick="openPaper('unemp')">
+      <div class="pico pip">&#128101;</div>
+      <div class="pinfo"><div class="pt">Unemployment &mdash; Measurement &amp; Causes</div><div class="pm"><span>&#128336; 30 min</span><span>M9 &middot; M10</span><span>5 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bp">Indicators</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+    <div class="pcard" data-cat="indicators" onclick="openPaper('growth')">
+      <div class="pico pic">&#127807;</div>
+      <div class="pinfo"><div class="pt">Economic Growth &amp; the Multiplier</div><div class="pm"><span>&#128336; 35 min</span><span>M11 &middot; M12 &middot; M13</span><span>7 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bc">Indicators</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+  </div>
+
+  <div class="ps-lbl" data-cat="policy">MACROECONOMIC POLICY</div>
+  <div class="pgrid">
+    <div class="pcard" data-cat="policy" onclick="openPaper('fiscal')">
+      <div class="pico pig">&#127963;</div>
+      <div class="pinfo"><div class="pt">Fiscal Policy</div><div class="pm"><span>&#128336; 30 min</span><span>M15</span><span>5 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bg">Policy</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+    <div class="pcard" data-cat="policy" onclick="openPaper('monetary')">
+      <div class="pico pic">&#127968;</div>
+      <div class="pinfo"><div class="pt">Monetary Policy</div><div class="pm"><span>&#128336; 25 min</span><span>M16</span><span>5 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bc">Policy</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+    <div class="pcard" data-cat="policy" onclick="openPaper('supplyside')">
+      <div class="pico pip">&#9881;</div>
+      <div class="pinfo"><div class="pt">Supply-Side Policy</div><div class="pm"><span>&#128336; 25 min</span><span>M17</span><span>5 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bp">Policy</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+  </div>
+
+  <div class="ps-lbl" data-cat="external">INTERNATIONAL ECONOMICS</div>
+  <div class="pgrid">
+    <div class="pcard" data-cat="external" onclick="openPaper('bop')">
+      <div class="pico pig">&#127758;</div>
+      <div class="pinfo"><div class="pt">Balance of Payments &amp; Imbalances</div><div class="pm"><span>&#128336; 35 min</span><span>M19 &middot; M20</span><span>6 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bg">External</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+    <div class="pcard" data-cat="external" onclick="openPaper('fx')">
+      <div class="pico pic">&#128177;</div>
+      <div class="pinfo"><div class="pt">Exchange Rates</div><div class="pm"><span>&#128336; 30 min</span><span>M21</span><span>6 questions</span></div></div>
+      <div class="pbdgs"><span class="bdg bc">External</span></div>
+      <div class="pacts"><span class="pbtn pri">Open &rarr;</span></div>
+    </div>
+  </div>
+</main>
+
+<div class="movr" id="movr" onclick="closeOvr(event)">
+  <div class="modal" id="mbox"></div>
+</div>
+
+<script>
+const PAPERS = {
+  ad:{title:'Aggregate Demand & AD Curve',sub:'M3 · M4 · 25 minutes',qs:[
+    {n:'1',m:2,q:'Define Aggregate Demand (AD).',ms:'Total demand for goods and services produced in an economy [1] at a given price level in a given time period [1]. Accept: AD = C+I+G+(X−M).'},
+    {n:'2',m:4,q:'State the formula for AD and briefly explain each component. [4]',ms:'<strong>AD = C+I+G+(X−M) [1]</strong> — C=household consumption [1]; I=investment [1]; G=government spending [1]; (X−M)=net exports [1]. Max 4.'},
+    {n:'3a',m:2,q:'Explain why the AD curve slopes downward. [2]',ms:'Any two: wealth effect — higher prices reduce real savings, cutting spending [1]; international competitiveness — UK goods more expensive abroad, ↓X [1]; real balance effect — higher prices reduce purchasing power [1].'},
+    {n:'3b',m:4,q:'Distinguish between a movement along and a shift of the AD curve. [4]',ms:'Movement along: caused by change in price level [1]; shown as extension/contraction [1]. Shift: caused by change in non-price determinant e.g. interest rates [1]; whole curve moves left/right [1].'},
+    {n:'4',m:8,q:'Evaluate the effectiveness of a cut in interest rates as a method of increasing Aggregate Demand. [8]',ms:'<strong>Analysis [4]:</strong> Lower rates → cheaper borrowing → ↑C and ↑I [2]; may depreciate currency → ↑(X−M) [2]. <strong>Evaluation [4]:</strong> Time lags 12–18 months [1]; lower bound limit [1]; confidence matters [1]; may inflate asset prices not real output [1]; depends on multiplier size [1]. Max 8.'}
+  ]},
+  as:{title:'Aggregate Supply & Equilibrium',sub:'M5 · M6 · 30 minutes',qs:[
+    {n:'1',m:2,q:'Distinguish between SRAS and LRAS. [2]',ms:'SRAS: upward sloping [1] — at least one factor fixed [1]. LRAS: vertical [1] — all factors variable, economy at full employment [1]. Both sides required.'},
+    {n:'2',m:3,q:'Explain three factors that shift SRAS left. [3]',ms:'Any three: rise in oil/raw material prices [1]; rise in wages [1]; rise in business taxes [1]; exchange rate depreciation raising import costs [1]; supply-side shock [1]. 1 mark each.'},
+    {n:'3',m:4,q:'Using AD/AS analysis, explain the effects of a positive supply shock on price level and output. [4]',ms:'SRAS shifts right [1]; new equilibrium at lower price level [1] and higher real output [1]; if LRAS shifts too, potential output increases [1].'},
+    {n:'4',m:3,q:'Explain what is meant by a negative output gap and state one consequence. [3]',ms:'Actual GDP < potential GDP [1]; spare capacity exists [1]. Consequence: cyclical unemployment [1] / deflationary pressure [1].'},
+    {n:'5',m:8,q:'Evaluate the view that the LRAS curve is vertical. [8]',ms:'<strong>Classical [3]:</strong> Flexible prices/wages in long run [1]; economy self-corrects [1]; vertical at productive capacity [1]. <strong>Keynesian [3]:</strong> Sticky wages [1]; economy can be stuck below full employment [1]; horizontal section when spare capacity large [1]. <strong>Evaluation [2]:</strong> Depends on time period [1]; prolonged recessions suggest not always vertical [1]. Max 8.'}
+  ]},
+  inflation:{title:'Inflation — Measurement & Causes',sub:'M7 · M8 · 30 minutes',qs:[
+    {n:'1',m:2,q:'Define inflation. [2]',ms:'A sustained [1] rise in the general price level [1] of an economy over time.'},
+    {n:'2',m:3,q:'Explain how the CPI is calculated. [3]',ms:'Basket of goods reflecting typical household spending [1]; prices tracked over time [1]; weighted average change gives single figure [1].'},
+    {n:'3',m:3,q:'State three limitations of CPI as a measure of inflation. [3]',ms:'Any three: basket may not reflect all households [1]; excludes housing/mortgage costs [1]; quality changes not accounted for [1]; basket updated infrequently [1]; ignores regional variation [1]. 1 mark each.'},
+    {n:'4',m:4,q:'Distinguish between demand-pull and cost-push inflation using AD/AS analysis. [4]',ms:'Demand-pull: excess AD [1]; AD shifts right, ↑price and ↑output [1]. Cost-push: rising costs [1]; SRAS shifts left, ↑price but ↓output [1].'},
+    {n:'5',m:6,q:'Explain the economic consequences of unexpectedly high inflation for different groups. [6]',ms:'Debtors benefit — real debt falls [1]; creditors lose [1]. Fixed-income earners lose purchasing power [1]. Exporters lose competitiveness [1]. Menu/shoe-leather costs [1]. Uncertainty discourages investment [1]. Max 6.'},
+    {n:'6',m:8,q:'Evaluate the effectiveness of monetary policy in controlling inflation. [8]',ms:'<strong>Analysis [4]:</strong> Higher rates → ↓AD → ↓demand-pull inflation [2]; appreciation → cheaper imports → ↓cost-push [2]. <strong>Evaluation [4]:</strong> Time lags 18–24 months [1]; causes unemployment [1]; ineffective against cost-push [1]; liquidity trap [1]; supply-side inflation needs supply-side response [1]. Max 8.'}
+  ]},
+  unemp:{title:'Unemployment — Measurement & Causes',sub:'M9 · M10 · 30 minutes',qs:[
+    {n:'1',m:2,q:'Define unemployment according to the ILO definition. [2]',ms:'Without a job [1]; AND available to start within two weeks AND actively sought work in past four weeks [1].'},
+    {n:'2',m:3,q:'Explain two differences between the Claimant Count and the LFS. [3]',ms:'Claimant count: only those claiming JSA/UC [1]; LFS uses ILO definition and is broader [1]; LFS captures discouraged workers [1]; claimant count affected by benefit eligibility changes [1]. Two differences required.'},
+    {n:'3',m:4,q:'Distinguish between frictional and structural unemployment. [4]',ms:'Frictional: temporary between jobs [1]; cause: imperfect information / job search time [1]. Structural: skills mismatch [1]; cause: deindustrialisation, technological change [1].'},
+    {n:'4',m:3,q:'Explain why official unemployment figures may underestimate true joblessness. [3]',ms:'Discouraged workers not counted [1]; underemployment not captured [1]; one hour of work = employed [1]; eligibility rules exclude some [1]. Any three.'},
+    {n:'5',m:8,q:'Evaluate the policies a government could use to reduce structural unemployment. [8]',ms:'<strong>Supply-side [4]:</strong> Education/retraining [1] — tackles skills mismatch [1]; benefit reform [1] — improves incentives [1]. <strong>Demand-side [2]:</strong> Expansionary policy raises AD, creates jobs [1]; does not address structural causes [1]. <strong>Evaluation [2]:</strong> Supply-side slow to work [1]; retraining only effective if growth sectors exist [1]; demand-side risks inflation [1]. Max 8.'}
+  ]},
+  growth:{title:'Economic Growth & the Multiplier',sub:'M11 · M12 · M13 · 35 minutes',qs:[
+    {n:'1',m:2,q:'Define economic growth. [2]',ms:'An increase [1] in real GDP [1] over time. Accept: increase in productive capacity.'},
+    {n:'2',m:2,q:'Distinguish between actual and potential economic growth. [2]',ms:'Actual: increase in real GDP using spare capacity [1]. Potential: increase in productive capacity / outward LRAS shift [1].'},
+    {n:'3',m:4,q:'Explain two causes of long-run economic growth. [4]',ms:'Any two: technological progress → higher productivity [1+1]; capital investment → shifts LRAS right [1+1]; improved human capital [1+1]; natural resource discovery [1+1].'},
+    {n:'4',m:4,q:'Explain two limitations of GDP as a measure of living standards. [4]',ms:'Ignores income distribution [1+1]; ignores negative externalities — pollution [1+1]; ignores non-market activity [1+1]; ignores leisure time [1+1]. Two × 2 marks.'},
+    {n:'5',m:4,q:'If MPC = 0.75, calculate the multiplier and explain what it means. [4]',ms:'MPS = 0.25 [1]; Multiplier = 1/MPS = 4 [1]. Meaning: £1 injection leads to £4 total rise in national income [1]; each recipient re-spends 75p [1].'},
+    {n:'6',m:6,q:'Explain how the multiplier works and why its size varies between economies. [6]',ms:'Injection → income → spending → income [1]; each round smaller due to leakages [1]; total = injection × multiplier [1]. Size varies: higher MPC → larger [1]; open economy/high imports → smaller [1]; higher tax → smaller [1]. Max 6.'},
+    {n:'7',m:8,q:'Evaluate the view that economic growth always improves living standards. [8]',ms:'<strong>For [3]:</strong> Higher incomes → more goods [1]; higher tax revenues → better services [1]; lower unemployment [1]. <strong>Against [3]:</strong> Worsens inequality [1]; environmental costs [1]; concentrated regionally [1]; ignores quality of life [1]. <strong>Evaluation [2]:</strong> Depends on type/distribution [1]; sustainable + redistributive growth most likely to improve living standards [1]. Max 8.'}
+  ]},
+  fiscal:{title:'Fiscal Policy',sub:'M15 · 30 minutes',qs:[
+    {n:'1',m:2,q:'Define fiscal policy. [2]',ms:'The use of government spending [1] and taxation [1] to influence aggregate demand.'},
+    {n:'2',m:3,q:'Distinguish between expansionary and contractionary fiscal policy. [3]',ms:'Expansionary: cutting taxes/↑G to increase AD [1+1]. Contractionary: raising taxes/↓G to reduce AD [1+1]. Both sides required — 3 marks max.'},
+    {n:'3',m:4,q:'Explain the role of automatic stabilisers. [4]',ms:'Reduce amplitude of economic cycles without discretionary action [1]. Recession: benefits rise automatically → supports demand [1+1]. Boom: progressive tax revenues rise automatically → removes spending power [1+1]. Max 4.'},
+    {n:'4',m:4,q:'Explain the difference between a cyclical and structural budget deficit. [4]',ms:'Cyclical: arises from economic cycle [1]; disappears in recovery [1]. Structural: exists even at full employment [1]; requires deliberate policy change [1].'},
+    {n:'5',m:8,q:'Evaluate the use of expansionary fiscal policy to reduce unemployment during a recession. [8]',ms:'<strong>Analysis [4]:</strong> ↑G or ↓T → ↑AD [1]; multiplier amplifies [1]; ↑output → ↑derived labour demand [1]; reduces cyclical unemployment [1]. <strong>Evaluation [4]:</strong> Won't fix structural unemployment [1]; crowding out [1]; time lags [1]; inflationary if near capacity [1]; raises national debt [1]. Max 8.'}
+  ]},
+  monetary:{title:'Monetary Policy',sub:'M16 · 25 minutes',qs:[
+    {n:'1',m:2,q:'Define monetary policy. [2]',ms:'The use of interest rates [1] and/or money supply/QE to influence aggregate demand [1].'},
+    {n:'2',m:4,q:'Explain the transmission mechanism by which higher interest rates reduce inflation. [4]',ms:'Higher rates → dearer borrowing → ↓C and ↓I [1] → AD shifts left [1] → downward pressure on prices [1]. Also: appreciation → cheaper imports → lower cost-push inflation [1].'},
+    {n:'3',m:3,q:'Explain what quantitative easing (QE) is and when it might be used. [3]',ms:'Central bank creates money electronically [1] to buy financial assets from banks [1]. Used when: rates near zero and conventional policy ineffective [1].'},
+    {n:'4',m:3,q:'Explain one advantage and one disadvantage of Bank of England independence. [3]',ms:'Advantage: removes political pressure [1]; builds credibility/anchors expectations [1]. Disadvantage: unelected body making key decisions [1]; may conflict with government fiscal objectives [1]. 1+1+1.'},
+    {n:'5',m:8,q:'Evaluate the effectiveness of monetary policy in achieving macroeconomic objectives. [8]',ms:'<strong>Analysis [4]:</strong> Can reduce inflation via higher rates [1]; stimulate growth via lower rates [1]; MPC independence adds credibility [1]; QE when rates at lower bound [1]. <strong>Evaluation [4]:</strong> Time lags 18–24 months [1]; lower bound limit [1]; QE may inflate assets/worsen inequality [1]; cannot address supply-side causes [1]; trade-off between objectives [1]. Max 8.'}
+  ]},
+  supplyside:{title:'Supply-Side Policy',sub:'M17 · 25 minutes',qs:[
+    {n:'1',m:2,q:'Define supply-side policies. [2]',ms:'Policies designed to increase productive capacity of the economy [1] by shifting LRAS right [1].'},
+    {n:'2',m:4,q:'Distinguish between market-based and interventionist supply-side policies with examples. [4]',ms:'Market-based: reduces government intervention [1]; e.g. tax cuts, deregulation [1]. Interventionist: direct government action [1]; e.g. education investment, R&D subsidies [1].'},
+    {n:'3',m:3,q:'Explain why supply-side policies are considered more effective for long-run growth. [3]',ms:'Shifts LRAS right → higher non-inflationary output [1]; demand-side only shifts AD → purely inflationary at full capacity [1]; supply-side improves productive efficiency [1].'},
+    {n:'4',m:3,q:'State and explain one limitation of supply-side policies. [3]',ms:'Long time to work — education reform takes decades [1+1]; market-based may increase inequality [1+1]; interventionist raises deficit [1+1]. Any one fully explained.'},
+    {n:'5',m:8,q:'Evaluate whether supply-side policies are the most effective way to reduce unemployment. [8]',ms:'<strong>For [4]:</strong> Address structural causes [1]; retraining tackles skills mismatch [1]; benefit reform improves incentives [1]; deregulation encourages hiring [1]. <strong>Against [4]:</strong> Don't address cyclical unemployment [1]; slow to impact [1]; retraining needs growing sectors [1]; market-based may increase inequality [1]. Max 8.'}
+  ]},
+  bop:{title:'Balance of Payments & Imbalances',sub:'M19 · M20 · 35 minutes',qs:[
+    {n:'1',m:2,q:'Define the current account of the balance of payments. [2]',ms:'Records transactions between UK and rest of world [1] including trade in goods, services, income and current transfers [1].'},
+    {n:'2',m:4,q:'Explain four components of the current account. [4]',ms:'Trade in goods (visibles) [1]; trade in services (invisibles) [1]; income (wages, investment income) [1]; current transfers (aid, remittances) [1]. 1 each.'},
+    {n:'3',m:3,q:'Explain the difference between a current account deficit and surplus. [3]',ms:'Deficit: imports exceed exports / net outflow [1]; spending more abroad than earning [1]. Surplus: exports exceed imports / net inflow [1]. Both required.'},
+    {n:'4',m:3,q:'Explain why a current account deficit may not always be a cause for concern. [3]',ms:'Any three: financed by productive FDI [1]; reflects strong domestic demand [1]; small relative to GDP [1]; strong credit rating [1]; services surplus may offset goods deficit [1].'},
+    {n:'5',m:8,q:'Evaluate policies to reduce a persistent current account deficit. [8]',ms:'<strong>Depreciation [3]:</strong> exports cheaper, imports dearer [1]; improves balance if Marshall-Lerner holds [1]; J-curve in short run [1]. <strong>Expenditure-reducing [2]:</strong> ↓income → ↓imports [1]; at cost of growth [1]. <strong>Supply-side [2]:</strong> improves competitiveness long-term [1]; slow to work [1]. <strong>Evaluation [1]:</strong> Depends on causes [1]. Max 8.'}
+  ]},
+  fx:{title:'Exchange Rates',sub:'M21 · 30 minutes',qs:[
+    {n:'1',m:2,q:'Define the exchange rate. [2]',ms:'Price of one currency in terms of another [1]; determined by supply and demand in forex market [1].'},
+    {n:'2',m:4,q:'Explain four factors that can cause the pound to appreciate. [4]',ms:'Higher UK interest rates attract hot money [1]; strong export performance increases £ demand [1]; speculation [1]; low relative inflation [1]; strong growth attracts FDI [1]. 1 each, max 4.'},
+    {n:'3',m:3,q:'Explain the Marshall-Lerner condition. [3]',ms:'Depreciation improves current account [1] only if PEDx + PEDm > 1 [1]. If elasticities too low, depreciation worsens balance [1].'},
+    {n:'4',m:3,q:'Explain the J-curve effect following a depreciation. [3]',ms:'Current account worsens in short run after depreciation [1]; existing contracts continue — volumes inelastic [1]; over time volumes adjust and balance improves [1] — creating J-shape.'},
+    {n:'5',m:8,q:'Evaluate the advantages and disadvantages of a floating vs fixed exchange rate. [8]',ms:'<strong>Floating advantages [3]:</strong> Monetary policy independence [1]; automatic adjustment to shocks [1]; no need for large reserves [1]. <strong>Floating disadvantages [2]:</strong> Uncertainty for trade [1]; speculative attacks [1]. <strong>Fixed advantages [2]:</strong> Certainty encourages trade [1]; discipline on inflation [1]. <strong>Fixed disadvantages [1]:</strong> Loss of monetary policy [1]. <strong>Evaluation [1]:</strong> Depends on economy size and openness [1]. Max 8.'}
+  ]}
+};
+
+function openPaper(id) {
+  const p = PAPERS[id]; if (!p) return;
+  let h = `<div class="mhdr"><div><div class="mtitle">${p.title}</div><div class="msub">${p.sub}</div></div>
+    <button class="mcls" onclick="closeModal()">&#10005;</button></div>`;
+  p.qs.forEach((q,i) => {
+    h += `<div class="qblk"><div class="qn">QUESTION ${q.n}</div><div class="qt">${q.q}</div>
+      <div class="qm">[${q.m} mark${q.m>1?'s':''}]</div>
+      <button class="ms-tog" onclick="toggleMS('ms-${id}-${i}',this)">&#9658; Show Mark Scheme</button>
+      <div class="ms" id="ms-${id}-${i}">${q.ms}</div></div>`;
+  });
+  document.getElementById('mbox').innerHTML = h;
+  document.getElementById('movr').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function toggleMS(id,btn) {
+  const el=document.getElementById(id); el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '&#9660; Hide Mark Scheme' : '&#9658; Show Mark Scheme';
+}
+function closeModal() {
+  document.getElementById('movr').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeOvr(e) { if(e.target===document.getElementById('movr')) closeModal(); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+function filter(cat, btn) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pcard').forEach(c => {
+    c.style.display = (cat==='all' || c.dataset.cat===cat) ? '' : 'none';
+  });
+  document.querySelectorAll('.ps-lbl').forEach(l => {
+    const cats = l.dataset.cat || '';
+    l.style.display = (cat==='all' || cats.includes(cat)) ? '' : 'none';
+  });
+}
+</script>
+</body></html>
