@@ -18,7 +18,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink2);font-family:'Sora',system-ui,sans-serif;font-size:15px;line-height:1.65;overflow-x:hidden}
-#cosmos{position:fixed;inset:0;z-index:0;pointer-events:none}
+#cosmos{position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%}
 .z{position:relative;z-index:2}
 
 /* NAV */
@@ -453,9 +453,10 @@ function frame() {
   requestAnimationFrame(frame);
 }
 
-resize();
-window.addEventListener('resize', resize);
-frame();
+window.addEventListener('load', () => {
+  resize();
+  window.addEventListener('resize', resize);
+  frame();
+});
 </script>
-</body>
-</html>
+</body></html>
