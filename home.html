@@ -271,91 +271,120 @@ footer p{font-size:12px;color:var(--muted)}
 </div>
 
 <script>
-// ── COSMOS: STARS + SHOOTING STARS ──────────────────────────────────────────
+// ── COSMOS ───────────────────────────────────────────────────────────────────
 const cvs = document.getElementById('cosmos');
 const ctx = cvs.getContext('2d');
-let W, H, stars = [], meteors = [];
+let W, H, stars = [], meteors = [], floaters = [];
 
 function resize() {
   W = cvs.width = innerWidth;
   H = cvs.height = innerHeight;
   buildStars();
+  buildFloaters();
 }
 
+// ── STATIC STARS ─────────────────────────────────────────────────────────────
 function buildStars() {
   stars = [];
-  const n = Math.floor(W * H / 4200);
+  const n = Math.floor(W * H / 3800);
   for (let i = 0; i < n; i++) {
     stars.push({
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 1.2 + 0.15,
-      a: Math.random() * 0.55 + 0.06,
-      da: (Math.random() * 0.008 + 0.002) * (Math.random() > .5 ? 1 : -1),
+      r: Math.random() * 1.4 + 0.1,
+      a: Math.random() * 0.6 + 0.05,
+      da: (Math.random() * 0.006 + 0.001) * (Math.random() > .5 ? 1 : -1),
     });
   }
 }
 
-class ShootingStar {
-  constructor(delay) {
-    this.delay = delay || 0;
-    this.active = false;
-    this.reset();
-    this.timer = -delay;
+// ── FLOATING ECONOMICS SYMBOLS ───────────────────────────────────────────────
+const ECON_SYMBOLS = ['%', '£', '$', '↑', '↓', '∑', 'Δ', 'π', 'α', 'β', '≈', '∞', 'GDP', 'CPI', 'AD', 'AS'];
+function buildFloaters() {
+  floaters = [];
+  const n = 26;
+  for (let i = 0; i < n; i++) {
+    floaters.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      sym: ECON_SYMBOLS[Math.floor(Math.random() * ECON_SYMBOLS.length)],
+      size: Math.random() * 16 + 12,
+      a: Math.random() * 0.15,
+      maxA: Math.random() * 0.18 + 0.08,
+      da: (Math.random() * 0.004 + 0.002) * (Math.random() > .5 ? 1 : -1),
+      vy: -(Math.random() * 0.4 + 0.15),
+      vx: (Math.random() - 0.5) * 0.15,
+      cyan: Math.random() > 0.5,
+    });
   }
-  reset() {
-    // Start from top-left quadrant, shoot diagonally down-right
-    this.x = Math.random() * W * 0.7;
-    this.y = Math.random() * H * 0.45;
-    const angle = (Math.PI / 180) * (Math.random() * 25 + 20); // 20-45 degrees
-    const speed = Math.random() * 8 + 6;
+}
+
+// ── SHOOTING STARS ───────────────────────────────────────────────────────────
+class ShootingStar {
+  constructor(startActive) {
+    this.reset(startActive);
+  }
+  reset(immediate) {
+    // spawn along the top edge or left edge
+    if (Math.random() > 0.5) {
+      this.x = Math.random() * W * 0.85;
+      this.y = -10;
+    } else {
+      this.x = -10;
+      this.y = Math.random() * H * 0.55;
+    }
+    const angle = (Math.PI / 180) * (Math.random() * 30 + 18); // 18–48°
+    const speed = Math.random() * 10 + 7;
     this.vx = Math.cos(angle) * speed;
     this.vy = Math.sin(angle) * speed;
-    this.len = Math.random() * 200 + 100;
-    this.alpha = 0;
-    this.maxAlpha = Math.random() * 0.7 + 0.3;
-    this.phase = 'in'; // in | cruise | out
+    this.len = Math.random() * 260 + 120;
+    this.maxAlpha = Math.random() * 0.55 + 0.45;
+    this.alpha = immediate ? 0 : 0;
+    this.phase = 'in';
     this.ticks = 0;
-    this.cruiseTicks = Math.floor(Math.random() * 35 + 20);
-    this.w = Math.random() * 1.6 + 0.5;
-    // Colour: mostly white/blue-white, 25% chance cyan
-    this.cyan = Math.random() > 0.75;
+    this.inTicks  = Math.floor(Math.random() * 8 + 6);
+    this.cruiseTicks = Math.floor(Math.random() * 40 + 25);
+    this.outTicks = Math.floor(Math.random() * 10 + 8);
+    this.w = Math.random() * 1.8 + 0.8;
+    this.cyan = Math.random() > 0.7;
+    // delay before this star fires
+    this.wait = immediate ? 0 : Math.floor(Math.random() * 300 + 40);
+    this.waitCount = 0;
   }
   tick() {
-    this.timer++;
-    if (this.timer < 0) return; // delay
-    
+    if (this.waitCount < this.wait) { this.waitCount++; return; }
+
     this.x += this.vx;
     this.y += this.vy;
     this.ticks++;
-    
+
     if (this.phase === 'in') {
-      this.alpha = Math.min(this.alpha + this.maxAlpha / 10, this.maxAlpha);
-      if (this.alpha >= this.maxAlpha) this.phase = 'cruise';
+      this.alpha += this.maxAlpha / this.inTicks;
+      if (this.alpha >= this.maxAlpha) { this.alpha = this.maxAlpha; this.phase = 'cruise'; }
     } else if (this.phase === 'cruise') {
-      if (this.ticks > this.cruiseTicks) this.phase = 'out';
+      if (this.ticks >= this.inTicks + this.cruiseTicks) this.phase = 'out';
     } else {
-      this.alpha -= this.maxAlpha / 14;
+      this.alpha -= this.maxAlpha / this.outTicks;
     }
-    
-    if (this.alpha <= 0 || this.x > W + 400 || this.y > H + 200) {
-      // Respawn after a pause
-      this.timer = -(Math.random() * 180 + 60);
-      this.reset();
-    }
+
+    if (this.alpha <= 0 && this.phase === 'out') this.reset(false);
+    if (this.x > W + 500 || this.y > H + 300) this.reset(false);
   }
   draw() {
-    if (this.timer < 0 || this.alpha <= 0) return;
+    if (this.waitCount < this.wait || this.alpha <= 0) return;
     const spd = Math.hypot(this.vx, this.vy);
+    if (!spd || !isFinite(spd)) return;
     const tx = this.x - (this.vx / spd) * this.len;
     const ty = this.y - (this.vy / spd) * this.len;
-    
+    if (!isFinite(tx) || !isFinite(ty) || !isFinite(this.x) || !isFinite(this.y)) return;
+
+    const col = this.cyan ? '56,220,255' : '210,228,255';
+
+    // tail
     const g = ctx.createLinearGradient(tx, ty, this.x, this.y);
-    const col = this.cyan ? `56,220,255` : `200,220,255`;
-    g.addColorStop(0, `rgba(${col},0)`);
-    g.addColorStop(0.7, `rgba(${col},${this.alpha * 0.4})`);
-    g.addColorStop(1, `rgba(${col},${this.alpha})`);
-    
+    g.addColorStop(0,   `rgba(${col},0)`);
+    g.addColorStop(0.6, `rgba(${col},${this.alpha * 0.35})`);
+    g.addColorStop(1,   `rgba(${col},${this.alpha})`);
     ctx.beginPath();
     ctx.moveTo(tx, ty);
     ctx.lineTo(this.x, this.y);
@@ -363,42 +392,64 @@ class ShootingStar {
     ctx.lineWidth = this.w;
     ctx.lineCap = 'round';
     ctx.stroke();
-    
-    // Bright tip
-    const tipGlow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.w * 4);
-    tipGlow.addColorStop(0, `rgba(${col},${this.alpha})`);
-    tipGlow.addColorStop(1, `rgba(${col},0)`);
+
+    // glowing head
+    const r = this.w * 3.5;
+    const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r * 2.5);
+    glow.addColorStop(0,   `rgba(${col},${this.alpha})`);
+    glow.addColorStop(0.4, `rgba(${col},${this.alpha * 0.5})`);
+    glow.addColorStop(1,   `rgba(${col},0)`);
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.w * 3, 0, Math.PI * 2);
-    ctx.fillStyle = tipGlow;
+    ctx.arc(this.x, this.y, r * 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = glow;
     ctx.fill();
   }
 }
 
-// Create meteors with staggered delays so they don't all fire at once
-for (let i = 0; i < 5; i++) {
-  meteors.push(new ShootingStar(i * 70));
+// Stagger meteors so first few fire quickly, rest are delayed
+for (let i = 0; i < 7; i++) {
+  const m = new ShootingStar(false);
+  m.wait = i < 3 ? i * 45 : Math.floor(Math.random() * 280 + 80);
+  meteors.push(m);
 }
 
+// ── MAIN LOOP ────────────────────────────────────────────────────────────────
 function frame() {
   ctx.clearRect(0, 0, W, H);
-  
+
   // Stars
   for (const s of stars) {
     s.a += s.da;
-    if (s.a > 0.62 || s.a < 0.05) s.da *= -1;
+    if (s.a > 0.65 || s.a < 0.04) s.da *= -1;
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(150,195,255,${s.a})`;
+    ctx.fillStyle = `rgba(160,200,255,${s.a})`;
     ctx.fill();
   }
-  
-  // Shooting stars
-  for (const m of meteors) {
-    m.tick();
-    m.draw();
+
+  // Economics floaters
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (const f of floaters) {
+    f.a += f.da;
+    if (f.a > f.maxA || f.a < 0) { f.da *= -1; f.a = Math.max(0, f.a); }
+    f.x += f.vx;
+    f.y += f.vy;
+    if (f.y < -30) { f.y = H + 20; f.x = Math.random() * W; }
+    if (f.x < -30) f.x = W + 20;
+    if (f.x > W + 30) f.x = -20;
+    ctx.font = `600 ${f.size}px 'DM Mono', monospace`;
+    ctx.fillStyle = f.cyan
+      ? `rgba(56,220,255,${f.a})`
+      : `rgba(184,255,71,${f.a})`;
+    ctx.fillText(f.sym, f.x, f.y);
   }
-  
+  ctx.restore();
+
+  // Shooting stars
+  for (const m of meteors) { m.tick(); m.draw(); }
+
   requestAnimationFrame(frame);
 }
 
