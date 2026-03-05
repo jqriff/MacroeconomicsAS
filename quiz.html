@@ -742,6 +742,7 @@
       <div class="progress-wrap">
         <div class="progress-label" id="progressLabel">1 / 10</div>
         <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-top:4px;" id="quizTimer">00:00</div>
       </div>
     </div>
 
@@ -1098,6 +1099,7 @@ function startQuiz() {
   document.getElementById('quizSubtitle').textContent = `${activeQuestions.length} questions — Mix of multiple choice, true/false & short answer`;
 
   renderQuestion();
+  startTimer();
 }
 
 // ─── RENDER QUESTION ──────────────────────────────────────────────────────────
@@ -1174,7 +1176,31 @@ function renderQuestion() {
   document.getElementById('questionContainer').innerHTML = html;
 }
 
-// ─── ANSWER HANDLERS ──────────────────────────────────────────────────────────
+// ─── TIMER ───────────────────────────────────────────────────────────────────
+let timerInterval = null;
+let timerSeconds = 0;
+
+function startTimer() {
+  timerSeconds = 0;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    const el = document.getElementById('quizTimer');
+    if (el) el.textContent = formatTime(timerSeconds);
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+
+
 function answerMC(i) {
   const q = activeQuestions[currentQ];
   userAnswers[currentQ] = { answered: true, correct: i === q.answer, userAns: i };
@@ -1203,23 +1229,24 @@ function prevQ() {
 
 // ─── RESULTS ─────────────────────────────────────────────────────────────────
 function showResults() {
+  stopTimer();
+  const timeTaken = formatTime(timerSeconds);
+
   document.getElementById('quizArea').classList.remove('active');
   document.getElementById('resultsArea').style.display = 'block';
 
-  const answered   = userAnswers.filter(a => a.answered);
+  const total      = activeQuestions.length;
   const correct    = userAnswers.filter(a => a.correct === true).length;
   const incorrect  = userAnswers.filter(a => a.correct === false).length;
-  const total      = answered.length;
   const shortCount = userAnswers.filter((a, i) => activeQuestions[i]?.type === 'short' && a.answered).length;
-  const pct = total > 0 ? Math.round((correct / total) * 100) : null;
+  const pct = Math.round((correct / total) * 100);
 
   const circum = 2 * Math.PI * 52;
-  const offset = pct !== null ? circum - (pct / 100) * circum : circum;
-  const ringClass = pct === null ? '' : pct >= 75 ? 'high' : pct >= 50 ? 'mid' : 'low';
+  const offset = circum - (pct / 100) * circum;
+  const ringClass = pct >= 75 ? 'high' : pct >= 50 ? 'mid' : 'low';
 
   let grade = '', gradeColor = 'var(--ink2)';
-  if (pct === null) { grade = 'Self-assessed'; }
-  else if (pct >= 75) { grade = 'Excellent'; gradeColor = '#56d364'; }
+  if (pct >= 75) { grade = 'Excellent'; gradeColor = '#56d364'; }
   else if (pct >= 50) { grade = 'Keep Revising'; gradeColor = '#e3b341'; }
   else { grade = 'Needs Work'; gradeColor = '#f85149'; }
 
@@ -1229,14 +1256,14 @@ function showResults() {
         <circle class="ring-bg" cx="60" cy="60" r="52"/>
         <circle class="ring-fill ${ringClass}" cx="60" cy="60" r="52"
           stroke-dasharray="${circum}"
-          stroke-dashoffset="${pct !== null ? offset : 0}"
+          stroke-dashoffset="${offset}"
           id="ringFill"/>
       </svg>
-      <div class="score-text">${pct !== null ? pct + '%' : '—'}</div>
+      <div class="score-text">${pct}%</div>
     </div>
     <div class="results-title">Quiz Complete</div>
     <div class="results-sub results-grade" style="color:${gradeColor};font-weight:600;font-size:16px;margin-bottom:8px;">${grade}</div>
-    <div class="results-sub">You answered ${answered.length} of ${activeQuestions.length} questions</div>
+    <div class="results-sub">You answered ${userAnswers.filter(a=>a.answered).length} of ${total} questions &nbsp;·&nbsp; ⏱ ${timeTaken}</div>
     <div class="results-breakdown">
       <div class="rb-item"><div class="rb-val" id="score-correct" style="color:var(--correct)">${correct}</div><div class="rb-label">Correct</div></div>
       <div class="rb-item"><div class="rb-val" id="score-incorrect" style="color:var(--wrong)">${incorrect}</div><div class="rb-label">Incorrect</div></div>
@@ -1313,23 +1340,21 @@ function markShortCorrect(i) {
 }
 
 function updateScoreDisplay() {
-  const answered = userAnswers.filter(a => a.answered);
-  const correct  = userAnswers.filter(a => a.correct === true).length;
-  const total    = answered.length;
-  const pct = total > 0 ? Math.round((correct / total) * 100) : null;
+  const total   = activeQuestions.length;
+  const correct = userAnswers.filter(a => a.correct === true).length;
+  const pct = Math.round((correct / total) * 100);
 
   const circum = 2 * Math.PI * 52;
-  const offset = pct !== null ? circum - (pct / 100) * circum : circum;
-  const ringClass = pct === null ? '' : pct >= 75 ? 'high' : pct >= 50 ? 'mid' : 'low';
+  const offset = circum - (pct / 100) * circum;
+  const ringClass = pct >= 75 ? 'high' : pct >= 50 ? 'mid' : 'low';
 
   let grade = '', gradeColor = 'var(--ink2)';
-  if (pct === null) { grade = 'Self-assessed'; }
-  else if (pct >= 75) { grade = 'Excellent'; gradeColor = '#56d364'; }
+  if (pct >= 75) { grade = 'Excellent'; gradeColor = '#56d364'; }
   else if (pct >= 50) { grade = 'Keep Revising'; gradeColor = '#e3b341'; }
   else { grade = 'Needs Work'; gradeColor = '#f85149'; }
 
   const scoreText = document.querySelector('.score-text');
-  if (scoreText) scoreText.textContent = pct !== null ? pct + '%' : '—';
+  if (scoreText) scoreText.textContent = pct + '%';
 
   const ring = document.getElementById('ringFill');
   if (ring) {
