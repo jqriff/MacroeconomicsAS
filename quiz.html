@@ -1206,11 +1206,11 @@ function showResults() {
   document.getElementById('quizArea').classList.remove('active');
   document.getElementById('resultsArea').style.display = 'block';
 
-  const answered = userAnswers.filter(a => a.answered);
-  const gradable  = userAnswers.filter(a => a.correct !== null);
-  const correct   = gradable.filter(a => a.correct).length;
-  const total     = gradable.length;
-  const shortCount = userAnswers.filter(a => activeQuestions[userAnswers.indexOf(a)]?.type === 'short').length;
+  const answered   = userAnswers.filter(a => a.answered);
+  const correct    = userAnswers.filter(a => a.correct === true).length;
+  const incorrect  = userAnswers.filter(a => a.correct === false).length;
+  const total      = answered.length;
+  const shortCount = userAnswers.filter((a, i) => activeQuestions[i]?.type === 'short' && a.answered).length;
   const pct = total > 0 ? Math.round((correct / total) * 100) : null;
 
   const circum = 2 * Math.PI * 52;
@@ -1239,7 +1239,7 @@ function showResults() {
     <div class="results-sub">You answered ${answered.length} of ${activeQuestions.length} questions</div>
     <div class="results-breakdown">
       <div class="rb-item"><div class="rb-val" id="score-correct" style="color:var(--correct)">${correct}</div><div class="rb-label">Correct</div></div>
-      <div class="rb-item"><div class="rb-val" id="score-incorrect" style="color:var(--wrong)">${total - correct}</div><div class="rb-label">Incorrect</div></div>
+      <div class="rb-item"><div class="rb-val" id="score-incorrect" style="color:var(--wrong)">${incorrect}</div><div class="rb-label">Incorrect</div></div>
       <div class="rb-item"><div class="rb-val" id="score-self" style="color:var(--muted)">${shortCount}</div><div class="rb-label">Self-Marked</div></div>
     </div>
     <div class="results-actions">
@@ -1314,10 +1314,9 @@ function markShortCorrect(i) {
 
 function updateScoreDisplay() {
   const answered = userAnswers.filter(a => a.answered);
-  const gradable  = userAnswers.filter(a => a.correct !== null);
-  const correct   = gradable.filter(a => a.correct).length;
-  const total     = answered.length;
-  const pct = gradable.length > 0 ? Math.round((correct / gradable.length) * 100) : null;
+  const correct  = userAnswers.filter(a => a.correct === true).length;
+  const total    = answered.length;
+  const pct = total > 0 ? Math.round((correct / total) * 100) : null;
 
   const circum = 2 * Math.PI * 52;
   const offset = pct !== null ? circum - (pct / 100) * circum : circum;
@@ -1349,7 +1348,7 @@ function updateScoreDisplay() {
   const selfUnmarked = shortAnswered.filter(a => a.correct === null).length;
 
   if (correctEl) correctEl.textContent = correct;
-  if (incorrectEl) incorrectEl.textContent = gradable.filter(a => !a.correct).length;
+  if (incorrectEl) incorrectEl.textContent = userAnswers.filter(a => a.correct === false).length;
   if (selfEl) selfEl.textContent = selfUnmarked;
 }
 
